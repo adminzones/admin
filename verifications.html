@@ -318,18 +318,13 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
     import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
     import {
       getFirestore,
       collection,
       query,
       where,
-      orderBy,
       getDocs,
       doc,
       getDoc,
@@ -337,13 +332,9 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-    import {
-      getStorage,
-      ref,
-      getDownloadURL
-    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
+    import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
-    // ✅ Match your index.html Firebase config
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyD_k18vbiBsLhQB7PzgEVT9PEI_30Mu0kg",
       authDomain: "uzone-6148d.firebaseapp.com",
@@ -355,11 +346,10 @@
       measurementId: "G-HKL5246YMC"
     };
 
-    // ✅ Same allowlist as admin index (edit to your admin emails)
+    // Admin allowlist (emails must be lowercase)
     const ADMIN_EMAILS = new Set([
-  "uzoneconf@gmail.com"
-]);
-
+      "uzoneconf@gmail.com"
+    ]);
 
     const app = initializeApp(firebaseConfig);
     try { if (await analyticsSupported()) getAnalytics(app); } catch(_) {}
@@ -391,9 +381,10 @@
       msgBox.className = "msg" + (kind ? " " + kind : "");
     }
 
+    // ✅ FIX: Set uses .has(), not .includes()
     function isAllowedAdmin(user){
       const email = (user?.email || "").toLowerCase().trim();
-      return email && ADMIN_EMAILS.includes(email);
+      return !!email && ADMIN_EMAILS.has(email);
     }
 
     function openLightbox(url, meta=""){
@@ -458,7 +449,6 @@
         const idLabel = document.createElement("div");
         idLabel.className = "imgLabel";
         idLabel.textContent = "Student ID";
-
         idBox.appendChild(idImg);
         idBox.appendChild(idLabel);
 
@@ -471,7 +461,6 @@
         const selfieLabel = document.createElement("div");
         selfieLabel.className = "imgLabel";
         selfieLabel.textContent = "Selfie";
-
         selfieBox.appendChild(selfieImg);
         selfieBox.appendChild(selfieLabel);
 
@@ -548,67 +537,61 @@
       render(filtered);
     }
 
-  async function loadPending(){
-  setMsg("");
-  subline.textContent = "Loading pending requests…";
+    async function loadPending(){
+      setMsg("");
+      subline.textContent = "Loading pending requests…";
 
-  try{
-    const colRef = collection(db, "verification_requests");
-
-    // ✅ safest query: no orderBy (avoids index + missing-field issues)
-    const qPending = query(colRef, where("status", "==", "pending"));
-    const snaps = await getDocs(qPending);
-
-    const items = [];
-    for (const d of snaps.docs){
-      const req = d.data();
-      const uid = req.uid || d.id;
-
-      // Pull user doc (for name + publicId)
-      let userData = {};
       try{
-        const userSnap = await getDoc(doc(db, "users", uid));
-        if (userSnap.exists()) userData = userSnap.data();
-      } catch(_) {}
+        const colRef = collection(db, "verification_requests");
 
-      const idUrl = await safeDownloadURL(req.idImagePath);
-      const selfieUrl = await safeDownloadURL(req.selfieImagePath);
+        // safest query: no orderBy (avoids indexes)
+        const qPending = query(colRef, where("status", "==", "pending"));
+        const snaps = await getDocs(qPending);
 
-      items.push({
-        uid,
-        publicId: userData.publicId || "",
-        name: userData.name || req.name || "",
-        idUrl,
-        selfieUrl
-      });
+        const items = [];
+        for (const d of snaps.docs){
+          const req = d.data();
+          const uid = req.uid || d.id;
+
+          // Pull user doc (for name + publicId)
+          let userData = {};
+          try{
+            const userSnap = await getDoc(doc(db, "users", uid));
+            if (userSnap.exists()) userData = userSnap.data();
+          } catch(_) {}
+
+          const idUrl = await safeDownloadURL(req.idImagePath);
+          const selfieUrl = await safeDownloadURL(req.selfieImagePath);
+
+          items.push({
+            uid,
+            publicId: userData.publicId || "",
+            name: userData.name || req.name || "",
+            idUrl,
+            selfieUrl
+          });
+        }
+
+        allItems = items;
+        render(allItems);
+        subline.textContent = `Pending: ${allItems.length}`;
+      } catch(err){
+        console.error(err);
+        setMsg(
+          "Failed to load pending requests.\n\n" +
+          (err?.message || String(err)),
+          "error"
+        );
+        subline.textContent = "Error loading";
+      }
     }
 
-    // Optional: sort client-side by updatedAt/createdAt if present
-    items.sort((a,b) => 0);
-
-    allItems = items;
-    render(allItems);
-    subline.textContent = `Pending: ${allItems.length}`;
-  } catch(err){
-    console.error(err);
-    setMsg(
-      "Failed to load pending requests.\n\n" +
-      (err?.message || String(err)),
-      "error"
-    );
-    subline.textContent = "Error loading";
-  }
-}
-
-
     async function verifyUser(uid){
-      // Mark request verified
       await setDoc(doc(db, "verification_requests", uid), {
         status: "verified",
         updatedAt: serverTimestamp()
       }, { merge: true });
 
-      // Mark user verified (aligns with your main site logic)
       await setDoc(doc(db, "users", uid), {
         verified: true,
         verification: { status: "verified", updatedAt: serverTimestamp() },
@@ -617,7 +600,6 @@
     }
 
     async function nullifyUser(uid){
-      // Mark request rejected/nullified
       await setDoc(doc(db, "verification_requests", uid), {
         status: "rejected",
         updatedAt: serverTimestamp()
