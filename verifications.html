@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Uzone Admin • Verifications</title>
+  <meta name="color-scheme" content="dark light" />
+
+  <style>
+    :root{
+      --accent:#b00b55;
+      --bg:#0b0b10;
+      --panel: rgba(255,255,255,.06);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(176,11,85,.30), transparent 60%),
+        radial-gradient(900px 600px at 80% 30%, rgba(176,11,85,.18), transparent 55%),
+        radial-gradient(700px 500px at 50% 90%, rgba(255,255,255,.06), transparent 60%),
+        var(--bg);
+    }
+
+    header{
+      width:min(1200px, 92vw);
+      margin:18px auto 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .left{display:flex; align-items:center; gap:12px; min-width:0;}
+    .left img{width:38px;height:38px;object-fit:contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));}
+    .title{display:grid; gap:2px; min-width:0;}
+    .title h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .title .sub{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      font-size:13px;
+      color:rgba(255,255,255,.85);
+    }
+    .btn{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(176,11,85,.55);
+      background: linear-gradient(135deg, rgba(176,11,85,.95), rgba(176,11,85,.58));
+      color:white;
+      font-weight:750;
+      cursor:pointer;
+      box-shadow: 0 18px 40px rgba(176,11,85,.22);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn.secondary{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      box-shadow:none;
+      color:rgba(255,255,255,.92);
+    }
+    .btn.danger{
+      border-color: rgba(255,80,120,.35);
+      background: rgba(255,80,120,.16);
+      box-shadow:none;
+    }
+    .btn:disabled{opacity:.65;cursor:not-allowed}
+
+    main{width:min(1200px, 92vw); margin:16px auto 34px auto; display:grid; gap:14px;}
+
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .sectionTitle{margin:0; font-size:15px; color:rgba(255,255,255,.88); letter-spacing:.2px;}
+    .search{
+      width:min(460px, 100%);
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+    }
+    .search:focus{
+      border-color: rgba(176,11,85,.60);
+      box-shadow: 0 0 0 4px rgba(176,11,85,.20);
+    }
+
+    .empty{
+      border:1px dashed rgba(255,255,255,.20);
+      background: rgba(0,0,0,.14);
+      border-radius: var(--radius);
+      padding:14px 16px;
+      color:rgba(255,255,255,.78);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .grid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 860px){ .grid{grid-template-columns:1fr;} }
+
+    .req{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    .reqHead{
+      padding:12px 12px 10px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .reqHead .meta{
+      display:grid;
+      gap:4px;
+      min-width:0;
+    }
+    .reqHead .meta b{font-size:14px; letter-spacing:.1px;}
+    .reqHead .meta span{color:rgba(255,255,255,.70); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      font-size:12px;
+      color:rgba(255,255,255,.85);
+      white-space:nowrap;
+    }
+    .badge .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,210,80,.80);}
+    .badge.pending{
+      border-color: rgba(255,210,80,.25);
+      background: rgba(255,210,80,.10);
+    }
+
+    .reqBody{
+      padding:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 520px){ .reqBody{grid-template-columns:1fr;} }
+
+    .imgBox{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      border-radius:14px;
+      overflow:hidden;
+      position:relative;
+      aspect-ratio: 4 / 3;
+    }
+    .imgBox img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.00);
+      transition: transform .18s ease;
+    }
+    .imgBox:hover img{transform: scale(1.03);}
+    .imgLabel{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding:8px 10px;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.60));
+      font-size:12px;
+      color:rgba(255,255,255,.90);
+    }
+
+    .reqActions{
+      padding:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    .msg{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.16);
+      color:rgba(255,255,255,.85);
+      display:none;
+      white-space:pre-line;
+      font-size:13px;
+    }
+    .msg.error{border-color: rgba(255,80,120,.35); background: rgba(255,80,120,.10);}
+    .msg.ok{border-color: rgba(80,255,160,.25); background: rgba(80,255,160,.10);}
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.72);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:999;
+    }
+    .lightboxInner{
+      width:min(980px, 96vw);
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      box-shadow: var(--shadow);
+    }
+    .lightboxInner img{
+      width:100%;
+      height:auto;
+      display:block;
+      max-height: 85vh;
+      object-fit:contain;
+      background: rgba(0,0,0,.45);
+    }
+    .lightboxBar{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+    }
+    .lightboxBar span{color:rgba(255,255,255,.78); font-size:13px;}
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="left">
+      <img src="logo.png" alt="Uzone logo" />
+      <div class="title">
+        <h1>Verifications</h1>
+        <div class="sub" id="subline">Loading…</div>
+      </div>
+    </div>
+
+    <div class="right">
+      <span class="chip" id="adminChip">Admin: —</span>
+      <button class="btn secondary" id="refreshBtn" type="button">Refresh</button>
+      <button class="btn danger" id="logoutBtn" type="button">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="topbar">
+        <h2 class="sectionTitle">Pending queue</h2>
+        <input class="search" id="search" placeholder="Search by U#, name, or uid…" />
+      </div>
+
+      <div class="msg" id="msgBox" aria-live="polite"></div>
+
+      <div class="empty" id="emptyBox" style="margin-top:12px; display:none;">
+        No pending verifications found.
+      </div>
+
+      <div class="grid" id="grid"></div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightboxInner">
+      <img id="lightboxImg" alt="Verification image" />
+      <div class="lightboxBar">
+        <span id="lightboxMeta">—</span>
+        <button class="btn secondary" id="closeLightbox" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      orderBy,
+      getDocs,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+    import {
+      getStorage,
+      ref,
+      getDownloadURL
+    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
+
+    // ✅ Match your index.html Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_k18vbiBsLhQB7PzgEVT9PEI_30Mu0kg",
+      authDomain: "uzone-6148d.firebaseapp.com",
+      databaseURL: "https://uzone-6148d-default-rtdb.firebaseio.com",
+      projectId: "uzone-6148d",
+      storageBucket: "uzone-6148d.firebasestorage.app",
+      messagingSenderId: "88783701381",
+      appId: "1:88783701381:web:4f6c4b1ad8b26d6fa6f0ec",
+      measurementId: "G-HKL5246YMC"
+    };
+
+    // ✅ Same allowlist as admin index (edit to your admin emails)
+    const ADMIN_EMAILS = [
+      "YOUR_ADMIN_EMAIL_HERE@example.com"
+    ].map(s => s.toLowerCase().trim());
+
+    const app = initializeApp(firebaseConfig);
+    try { if (await analyticsSupported()) getAnalytics(app); } catch(_) {}
+
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // UI
+    const subline = document.getElementById("subline");
+    const adminChip = document.getElementById("adminChip");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const searchEl = document.getElementById("search");
+    const msgBox = document.getElementById("msgBox");
+    const emptyBox = document.getElementById("emptyBox");
+    const grid = document.getElementById("grid");
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxMeta = document.getElementById("lightboxMeta");
+    const closeLightbox = document.getElementById("closeLightbox");
+
+    let allItems = []; // cached for search filtering
+
+    function setMsg(text, kind="") {
+      msgBox.style.display = text ? "block" : "none";
+      msgBox.textContent = text || "";
+      msgBox.className = "msg" + (kind ? " " + kind : "");
+    }
+
+    function isAllowedAdmin(user){
+      const email = (user?.email || "").toLowerCase().trim();
+      return email && ADMIN_EMAILS.includes(email);
+    }
+
+    function openLightbox(url, meta=""){
+      lightboxImg.src = url;
+      lightboxMeta.textContent = meta || "—";
+      lightbox.style.display = "flex";
+    }
+    function closeLb(){
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+      lightboxMeta.textContent = "—";
+    }
+
+    async function safeDownloadURL(path){
+      if (!path) return "";
+      try{
+        return await getDownloadURL(ref(storage, path));
+      } catch(_){
+        return "";
+      }
+    }
+
+    function render(items){
+      grid.innerHTML = "";
+      emptyBox.style.display = items.length ? "none" : "block";
+
+      items.forEach(item => {
+        const wrap = document.createElement("div");
+        wrap.className = "req";
+
+        const head = document.createElement("div");
+        head.className = "reqHead";
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+
+        const title = document.createElement("b");
+        title.textContent = `${item.publicId || "U—"} • ${item.name || "No name"}`;
+
+        const sub = document.createElement("span");
+        sub.textContent = `uid: ${item.uid}`;
+
+        meta.appendChild(title);
+        meta.appendChild(sub);
+
+        const badge = document.createElement("span");
+        badge.className = "badge pending";
+        badge.innerHTML = `<span class="dot"></span><span>Pending</span>`;
+
+        head.appendChild(meta);
+        head.appendChild(badge);
+
+        const body = document.createElement("div");
+        body.className = "reqBody";
+
+        const idBox = document.createElement("div");
+        idBox.className = "imgBox";
+        const idImg = document.createElement("img");
+        idImg.alt = "Student ID photo";
+        idImg.src = item.idUrl || "";
+        if (!item.idUrl) idImg.style.opacity = "0.35";
+        const idLabel = document.createElement("div");
+        idLabel.className = "imgLabel";
+        idLabel.textContent = "Student ID";
+
+        idBox.appendChild(idImg);
+        idBox.appendChild(idLabel);
+
+        const selfieBox = document.createElement("div");
+        selfieBox.className = "imgBox";
+        const selfieImg = document.createElement("img");
+        selfieImg.alt = "Selfie photo";
+        selfieImg.src = item.selfieUrl || "";
+        if (!item.selfieUrl) selfieImg.style.opacity = "0.35";
+        const selfieLabel = document.createElement("div");
+        selfieLabel.className = "imgLabel";
+        selfieLabel.textContent = "Selfie";
+
+        selfieBox.appendChild(selfieImg);
+        selfieBox.appendChild(selfieLabel);
+
+        idBox.addEventListener("click", () => item.idUrl && openLightbox(item.idUrl, `${item.publicId || "U—"} • Student ID`));
+        selfieBox.addEventListener("click", () => item.selfieUrl && openLightbox(item.selfieUrl, `${item.publicId || "U—"} • Selfie`));
+
+        body.appendChild(idBox);
+        body.appendChild(selfieBox);
+
+        const actions = document.createElement("div");
+        actions.className = "reqActions";
+
+        const verifyBtn = document.createElement("button");
+        verifyBtn.className = "btn";
+        verifyBtn.type = "button";
+        verifyBtn.textContent = "Verify";
+
+        const nullifyBtn = document.createElement("button");
+        nullifyBtn.className = "btn danger";
+        nullifyBtn.type = "button";
+        nullifyBtn.textContent = "Nullify";
+
+        verifyBtn.addEventListener("click", async () => {
+          verifyBtn.disabled = true;
+          nullifyBtn.disabled = true;
+          try{
+            await verifyUser(item.uid);
+            setMsg(`Verified ${item.publicId || item.uid}.`, "ok");
+            await loadPending();
+          } catch(err){
+            setMsg(err?.message || "Verify failed.", "error");
+          } finally{
+            verifyBtn.disabled = false;
+            nullifyBtn.disabled = false;
+          }
+        });
+
+        nullifyBtn.addEventListener("click", async () => {
+          nullifyBtn.disabled = true;
+          verifyBtn.disabled = true;
+          try{
+            await nullifyUser(item.uid);
+            setMsg(`Nullified ${item.publicId || item.uid}.`, "ok");
+            await loadPending();
+          } catch(err){
+            setMsg(err?.message || "Nullify failed.", "error");
+          } finally{
+            nullifyBtn.disabled = false;
+            verifyBtn.disabled = false;
+          }
+        });
+
+        actions.appendChild(verifyBtn);
+        actions.appendChild(nullifyBtn);
+
+        wrap.appendChild(head);
+        wrap.appendChild(body);
+        wrap.appendChild(actions);
+
+        grid.appendChild(wrap);
+      });
+    }
+
+    function applySearch(){
+      const q = (searchEl.value || "").toLowerCase().trim();
+      if (!q) return render(allItems);
+
+      const filtered = allItems.filter(item => {
+        const a = (item.publicId || "").toLowerCase();
+        const b = (item.name || "").toLowerCase();
+        const c = (item.uid || "").toLowerCase();
+        return a.includes(q) || b.includes(q) || c.includes(q);
+      });
+      render(filtered);
+    }
+
+    async function loadPending(){
+      setMsg("");
+      subline.textContent = "Loading pending requests…";
+
+      // status == "pending"
+      const col = collection(db, "verification_requests");
+      const q = query(col, where("status", "==", "pending"), orderBy("updatedAt", "desc"));
+
+      const snaps = await getDocs(q);
+
+      const items = [];
+      for (const d of snaps.docs){
+        const req = d.data();
+        const uid = req.uid || d.id;
+
+        // Pull user doc (for name + publicId)
+        let userData = {};
+        try{
+          const userSnap = await getDoc(doc(db, "users", uid));
+          if (userSnap.exists()) userData = userSnap.data();
+        } catch(_) {}
+
+        const idUrl = await safeDownloadURL(req.idImagePath);
+        const selfieUrl = await safeDownloadURL(req.selfieImagePath);
+
+        items.push({
+          uid,
+          publicId: userData.publicId || "",
+          name: userData.name || req.name || "",
+          idUrl,
+          selfieUrl
+        });
+      }
+
+      allItems = items;
+      render(allItems);
+
+      subline.textContent = `Pending: ${allItems.length}`;
+    }
+
+    async function verifyUser(uid){
+      // Mark request verified
+      await setDoc(doc(db, "verification_requests", uid), {
+        status: "verified",
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      // Mark user verified (aligns with your main site logic)
+      await setDoc(doc(db, "users", uid), {
+        verified: true,
+        verification: { status: "verified", updatedAt: serverTimestamp() },
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+
+    async function nullifyUser(uid){
+      // Mark request rejected/nullified
+      await setDoc(doc(db, "verification_requests", uid), {
+        status: "rejected",
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      await setDoc(doc(db, "users", uid), {
+        verified: false,
+        verification: { status: "rejected", updatedAt: serverTimestamp() },
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+
+    // Auth gate
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+
+      if (!isAllowedAdmin(user)) {
+        await signOut(auth);
+        window.location.href = "index.html";
+        return;
+      }
+
+      adminChip.textContent = `Admin: ${user.email || "—"}`;
+      await loadPending();
+    });
+
+    // Events
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+
+    refreshBtn.addEventListener("click", loadPending);
+    searchEl.addEventListener("input", applySearch);
+
+    closeLightbox.addEventListener("click", closeLb);
+    lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLb(); });
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLb(); });
+  </script>
+</body>
+</html>
