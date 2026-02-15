@@ -547,45 +547,58 @@
       render(filtered);
     }
 
-    async function loadPending(){
-      setMsg("");
-      subline.textContent = "Loading pending requests…";
+  async function loadPending(){
+  setMsg("");
+  subline.textContent = "Loading pending requests…";
 
-      // status == "pending"
-      const col = collection(db, "verification_requests");
-      const q = query(col, where("status", "==", "pending"), orderBy("updatedAt", "desc"));
+  try{
+    const colRef = collection(db, "verification_requests");
 
-      const snaps = await getDocs(q);
+    // ✅ safest query: no orderBy (avoids index + missing-field issues)
+    const qPending = query(colRef, where("status", "==", "pending"));
+    const snaps = await getDocs(qPending);
 
-      const items = [];
-      for (const d of snaps.docs){
-        const req = d.data();
-        const uid = req.uid || d.id;
+    const items = [];
+    for (const d of snaps.docs){
+      const req = d.data();
+      const uid = req.uid || d.id;
 
-        // Pull user doc (for name + publicId)
-        let userData = {};
-        try{
-          const userSnap = await getDoc(doc(db, "users", uid));
-          if (userSnap.exists()) userData = userSnap.data();
-        } catch(_) {}
+      // Pull user doc (for name + publicId)
+      let userData = {};
+      try{
+        const userSnap = await getDoc(doc(db, "users", uid));
+        if (userSnap.exists()) userData = userSnap.data();
+      } catch(_) {}
 
-        const idUrl = await safeDownloadURL(req.idImagePath);
-        const selfieUrl = await safeDownloadURL(req.selfieImagePath);
+      const idUrl = await safeDownloadURL(req.idImagePath);
+      const selfieUrl = await safeDownloadURL(req.selfieImagePath);
 
-        items.push({
-          uid,
-          publicId: userData.publicId || "",
-          name: userData.name || req.name || "",
-          idUrl,
-          selfieUrl
-        });
-      }
-
-      allItems = items;
-      render(allItems);
-
-      subline.textContent = `Pending: ${allItems.length}`;
+      items.push({
+        uid,
+        publicId: userData.publicId || "",
+        name: userData.name || req.name || "",
+        idUrl,
+        selfieUrl
+      });
     }
+
+    // Optional: sort client-side by updatedAt/createdAt if present
+    items.sort((a,b) => 0);
+
+    allItems = items;
+    render(allItems);
+    subline.textContent = `Pending: ${allItems.length}`;
+  } catch(err){
+    console.error(err);
+    setMsg(
+      "Failed to load pending requests.\n\n" +
+      (err?.message || String(err)),
+      "error"
+    );
+    subline.textContent = "Error loading";
+  }
+}
+
 
     async function verifyUser(uid){
       // Mark request verified
