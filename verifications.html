@@ -356,9 +356,10 @@
     };
 
     // ✅ Same allowlist as admin index (edit to your admin emails)
-    const ADMIN_EMAILS = [
-      "uzoneconf@gmail.com"
-    ].map(s => s.toLowerCase().trim());
+    const ADMIN_EMAILS = new Set([
+  "uzoneconf@gmail.com"
+]);
+
 
     const app = initializeApp(firebaseConfig);
     try { if (await analyticsSupported()) getAnalytics(app); } catch(_) {}
