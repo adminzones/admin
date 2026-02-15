@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Uzone Admin • Login</title>
+  <meta name="color-scheme" content="dark light" />
+
+  <style>
+    :root{
+      --accent:#b00b55;
+      --bg:#0b0b10;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(176,11,85,.30), transparent 60%),
+        radial-gradient(900px 600px at 80% 30%, rgba(176,11,85,.18), transparent 55%),
+        radial-gradient(700px 500px at 50% 90%, rgba(255,255,255,.06), transparent 60%),
+        var(--bg);
+    }
+    .wrap{
+      width:min(980px, 92vw);
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 860px){
+      .wrap{grid-template-columns:1fr}
+    }
+    .brand, .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .brand{ padding:26px; position:relative; }
+    .logoRow{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logoRow img{
+      width:44px;height:44px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));
+    }
+    .brand h1{ margin:0; font-size:28px; letter-spacing:.2px; }
+    .brand p{ margin:14px 0 0 0; color:var(--muted); line-height:1.45; }
+    .pillRow{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .pill{
+      font-size:13px;
+      color:rgba(255,255,255,.85);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(176,11,85,.10);
+    }
+
+    .card{ padding:22px; }
+    .tabs{
+      display:flex;
+      gap:10px;
+      padding:6px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      width:fit-content;
+    }
+    .tab{
+      appearance:none;
+      border:0;
+      background:transparent;
+      color:rgba(255,255,255,.75);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.2px;
+    }
+    .tab.active{
+      color:white;
+      background: linear-gradient(135deg, rgba(176,11,85,.95), rgba(176,11,85,.55));
+      box-shadow: 0 12px 30px rgba(176,11,85,.25);
+    }
+    .form{ margin-top:16px; display:grid; gap:12px; }
+    label{ display:grid; gap:6px; font-size:13px; color:rgba(255,255,255,.78); }
+    input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus{
+      border-color: rgba(176,11,85,.60);
+      box-shadow: 0 0 0 4px rgba(176,11,85,.20);
+    }
+
+    .btn{
+      margin-top:6px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid rgba(176,11,85,.55);
+      background: linear-gradient(135deg, rgba(176,11,85,.95), rgba(176,11,85,.58));
+      color:white;
+      font-weight:750;
+      letter-spacing:.2px;
+      cursor:pointer;
+      box-shadow: 0 18px 40px rgba(176,11,85,.22);
+    }
+    .btn:disabled{ opacity:.65; cursor:not-allowed; }
+
+    .meta{ margin-top:10px; color:rgba(255,255,255,.65); font-size:13px; line-height:1.4; }
+    .msg{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.16);
+      color:rgba(255,255,255,.85);
+      display:none;
+      white-space:pre-line;
+    }
+    .msg.error{ border-color: rgba(255,80,120,.35); background: rgba(255,80,120,.10); }
+    .msg.ok{ border-color: rgba(80,255,160,.25); background: rgba(80,255,160,.10); }
+    .smallLink{
+      display:inline-block;
+      margin-top:6px;
+      font-size:13px;
+      color:rgba(255,255,255,.72);
+      cursor:pointer;
+      text-decoration: underline;
+      text-decoration-color: rgba(176,11,85,.55);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="brand">
+      <div class="logoRow">
+        <img src="logo.png" alt="Uzone logo" />
+        <h1>Uzone Admin</h1>
+      </div>
+
+      <p>
+        Admin sign-in for verification review.
+        <br /><br />
+        Only approved admin emails can proceed.
+      </p>
+
+      <div class="pillRow">
+        <span class="pill">Verification Queue</span>
+        <span class="pill">Approve / Reject</span>
+        <span class="pill">Audit-friendly</span>
+      </div>
+
+      <p class="meta">
+        Tip: Add this GitHub Pages domain to Firebase Auth <b>Authorized domains</b>.
+      </p>
+    </section>
+
+    <section class="card" aria-label="Admin login card">
+      <div class="tabs" role="tablist" aria-label="Admin login">
+        <button class="tab active" id="tabLogin" role="tab" aria-selected="true">Admin Login</button>
+      </div>
+
+      <form class="form" id="authForm">
+        <label>
+          Email
+          <input id="email" type="email" autocomplete="email" placeholder="admin@domain.com" required />
+        </label>
+
+        <label>
+          Password
+          <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </label>
+
+        <button class="btn" id="submitBtn" type="submit">Login</button>
+
+        <div class="msg" id="msgBox" aria-live="polite"></div>
+
+        <span class="smallLink" id="forgotPw">Forgot password?</span>
+
+        <p class="meta">
+          If you’re blocked, update the admin allowlist in this file.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+    // ✅ Edit this allowlist
+    const ADMIN_EMAILS = [
+      "YOUR_ADMIN_EMAIL_HERE@example.com"
+    ].map(s => s.toLowerCase().trim());
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_k18vbiBsLhQB7PzgEVT9PEI_30Mu0kg",
+      authDomain: "uzone-6148d.firebaseapp.com",
+      databaseURL: "https://uzone-6148d-default-rtdb.firebaseio.com",
+      projectId: "uzone-6148d",
+      storageBucket: "uzone-6148d.firebasestorage.app",
+      messagingSenderId: "88783701381",
+      appId: "1:88783701381:web:4f6c4b1ad8b26d6fa6f0ec",
+      measurementId: "G-HKL5246YMC"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    try { if (await analyticsSupported()) getAnalytics(app); } catch(_) {}
+
+    const auth = getAuth(app);
+
+    const form = document.getElementById("authForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const msgBox = document.getElementById("msgBox");
+    const emailEl = document.getElementById("email");
+    const pwEl = document.getElementById("password");
+    const forgotPw = document.getElementById("forgotPw");
+
+    function setMsg(text, kind="") {
+      msgBox.style.display = text ? "block" : "none";
+      msgBox.textContent = text || "";
+      msgBox.className = "msg" + (kind ? " " + kind : "");
+    }
+
+    function friendlyAuthError(err){
+      const code = (err?.code || "").toString();
+      if (code.includes("auth/invalid-credential")) return "Invalid email or password.";
+      if (code.includes("auth/invalid-email")) return "That email address doesn’t look valid.";
+      if (code.includes("auth/network-request-failed")) return "Network error. Check your connection and try again.";
+      return err?.message || "Something went wrong. Please try again.";
+    }
+
+    function isAllowedAdmin(user){
+      const email = (user?.email || "").toLowerCase().trim();
+      return email && ADMIN_EMAILS.includes(email);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+
+      if (!isAllowedAdmin(user)) {
+        setMsg("This account is not in the admin allowlist.", "error");
+        await signOut(auth);
+        return;
+      }
+
+      window.location.href = "verifications.html";
+    });
+
+    forgotPw.addEventListener("click", async () => {
+      const email = emailEl.value.trim();
+      if (!email) {
+        setMsg("Enter your email above first, then click “Forgot password?” again.", "error");
+        return;
+      }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        setMsg("Password reset email sent. Check your inbox.", "ok");
+      } catch (err) {
+        setMsg(friendlyAuthError(err), "error");
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setMsg("");
+
+      submitBtn.disabled = true;
+      try{
+        const email = emailEl.value.trim();
+        const password = pwEl.value;
+
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+
+        if (!isAllowedAdmin(cred.user)) {
+          setMsg("This account is not in the admin allowlist.", "error");
+          await signOut(auth);
+          return;
+        }
+
+        setMsg("Logged in. Redirecting…", "ok");
+        window.location.href = "verifications.html";
+      } catch(err){
+        setMsg(friendlyAuthError(err), "error");
+      } finally{
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
