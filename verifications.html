@@ -329,7 +329,9 @@
       doc,
       getDoc,
       setDoc,
-      serverTimestamp
+      serverTimestamp,
+      runTransaction,
+      increment
     } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
     import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
@@ -404,6 +406,67 @@
         return await getDownloadURL(ref(storage, path));
       } catch(_){
         return "";
+      }
+    }
+
+    function isVerifiedUserDoc(data){
+      if (!data) return false;
+      if (data.verified === true) return true;
+      if (data.verification?.status === "verified") return true;
+      return false;
+    }
+
+    // Pays out for ONE invitee if eligible
+    async function awardForInviteeIfEligible(inviteeUid){
+      const inviteeRef = doc(db, "users", inviteeUid);
+
+      await runTransaction(db, async (tx) => {
+        const inviteeSnap = await tx.get(inviteeRef);
+        if (!inviteeSnap.exists()) return;
+
+        const invitee = inviteeSnap.data();
+        if (!isVerifiedUserDoc(invitee)) return;
+
+        const refUid = invitee.referredBy;
+        if (!refUid) return;
+        if (invitee.referralAwarded === true) return;
+
+        const referrerRef = doc(db, "users", refUid);
+        const refSnap = await tx.get(referrerRef);
+        if (!refSnap.exists()) return;
+
+        const referrer = refSnap.data();
+        if (!isVerifiedUserDoc(referrer)) return;
+
+        // Award both +1, mark awarded on invitee
+        tx.set(inviteeRef, {
+          credits: increment(1),
+          referralAwarded: true,
+          referralStatus: "awarded",
+          creditsUpdatedAt: serverTimestamp()
+        }, { merge: true });
+
+        tx.set(referrerRef, {
+          credits: increment(1),
+          creditsUpdatedAt: serverTimestamp()
+        }, { merge: true });
+      });
+    }
+
+    // If a referrer becomes verified, pay out any verified invitees they referred
+    async function awardForReferrerIfEligible(referrerUid){
+      const qy = query(
+        collection(db, "users"),
+        where("referredBy", "==", referrerUid),
+        where("referralAwarded", "==", false)
+      );
+      const snaps = await getDocs(qy);
+
+      for (const d of snaps.docs){
+        const inviteeUid = d.id;
+        const invitee = d.data();
+        if (!isVerifiedUserDoc(invitee)) continue;
+        await awardForInviteeIfEligible(inviteeUid);
       }
     }
 
@@ -587,16 +650,25 @@
     }
 
     async function verifyUser(uid){
+      // 1) Mark request verified
       await setDoc(doc(db, "verification_requests", uid), {
         status: "verified",
         updatedAt: serverTimestamp()
       }, { merge: true });
 
+      // 2) Mark user verified
       await setDoc(doc(db, "users", uid), {
         verified: true,
         verification: { status: "verified", updatedAt: serverTimestamp() },
         updatedAt: serverTimestamp()
       }, { merge: true });
+
+      // 3) Referral payout logic (admin-triggered)
+      // If this verified user is an invitee, try paying their referral
+      await awardForInviteeIfEligible(uid);
+
+      // If this verified user is a referrer, pay any verified invitees they referred
+      await awardForReferrerIfEligible(uid);
     }
 
     async function nullifyUser(uid){
