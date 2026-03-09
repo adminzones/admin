@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Uzone Admin • Hub</title>
+  <meta name="color-scheme" content="light" />
+
+  <style>
+    :root{
+      --bg: #f8f7ff;
+      --bg2: #fcfbff;
+      --ink: #111018;
+      --muted: rgba(17,16,24,.62);
+
+      --pink: #b00b55;
+      --purple: #6d28d9;
+      --blue: #8bd3ff;
+      --green: #58c99a;
+
+      --card: rgba(255,255,255,.88);
+      --border: rgba(17,16,24,.10);
+      --shadow: 0 18px 60px rgba(17,16,24,.08);
+
+      --radius: 20px;
+      --radius2: 16px;
+      --danger: #c6285d;
+      --success: #2f9e6f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ min-height:100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1200px 700px at 10% -10%, rgba(139,211,255,.20), transparent 60%),
+        radial-gradient(1000px 600px at 100% 0%, rgba(176,11,85,.08), transparent 58%),
+        radial-gradient(1100px 700px at 50% 100%, rgba(109,40,217,.10), transparent 62%),
+        linear-gradient(180deg, #fbfaff 0%, #f8f7ff 45%, #fbfbff 100%);
+      background-attachment: fixed;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.72);
+      border-bottom: 1px solid rgba(17,16,24,.08);
+    }
+
+    .topbar{
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+      padding: 12px 0;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap: 14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      border:1px solid rgba(17,16,24,.08);
+      background: rgba(255,255,255,.6);
+      object-fit: cover;
+    }
+
+    .brandText{
+      display:grid;
+      gap:2px;
+      min-width:0;
+    }
+
+    .brandText b{
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+
+    .brandText span{
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .topActions{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(17,16,24,.10);
+      background: rgba(255,255,255,.84);
+      font-size:12px;
+      font-weight:900;
+      color: rgba(17,16,24,.78);
+      box-shadow: 0 10px 24px rgba(17,16,24,.04);
+      max-width: min(320px, 70vw);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(17,16,24,.12);
+      background: rgba(255,255,255,.84);
+      cursor:pointer;
+      font-weight:950;
+      font-size:13px;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease, opacity .12s ease;
+      white-space:nowrap;
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(176,11,85,.25);
+      box-shadow: 0 14px 38px rgba(176,11,85,.08);
+    }
+
+    .btn.primary{
+      border-color: rgba(176,11,85,.28);
+      background: linear-gradient(135deg, rgba(176,11,85,.14), rgba(109,40,217,.10));
+    }
+
+    .btn.danger{
+      border-color: rgba(176,11,85,.22);
+      background: rgba(176,11,85,.08);
+      color: var(--danger);
+    }
+
+    main{
+      width: min(1120px, 92vw);
+      margin: 18px auto 44px auto;
+      display:grid;
+      gap:18px;
+    }
+
+    .banner{
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.48);
+      background:
+        radial-gradient(650px 260px at 10% 35%, rgba(139,211,255,.34), transparent 60%),
+        radial-gradient(700px 280px at 65% 10%, rgba(109,40,217,.14), transparent 55%),
+        radial-gradient(620px 240px at 95% 75%, rgba(176,11,85,.14), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.74));
+      box-shadow: 0 22px 70px rgba(17,16,24,.08);
+      padding:16px;
+      backdrop-filter: blur(12px);
+    }
+
+    .bannerTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .banner h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+
+    .banner p{
+      margin:8px 0 0 0;
+      color: rgba(17,16,24,.70);
+      font-size:13px;
+      line-height:1.45;
+      max-width: 70ch;
+    }
+
+    .miniBtns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.45);
+      background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.74));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .cardInner{
+      padding:16px;
+    }
+
+    .hRow{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+
+    .sub{
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.35;
+      margin-top:6px;
+    }
+
+    .msg{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(17,16,24,.08);
+      background: rgba(255,255,255,.72);
+      color: rgba(17,16,24,.74);
+      font-size:13px;
+      line-height:1.45;
+      display:none;
+      white-space:pre-line;
+    }
+
+    .msg.ok{
+      background: rgba(88,201,154,.14);
+      border-color: rgba(88,201,154,.22);
+      color: rgba(17,16,24,.86);
+    }
+
+    .msg.error{
+      background: rgba(176,11,85,.08);
+      border-color: rgba(176,11,85,.18);
+      color: #8c184a;
+    }
+
+    .hubGrid{
+      display:grid;
+      gap:14px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-items:stretch;
+      margin-top:14px;
+    }
+
+    .hubCard{
+      border:1px solid rgba(255,255,255,.44);
+      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.76));
+      border-radius: var(--radius2);
+      overflow:hidden;
+      box-shadow: 0 18px 50px rgba(17,16,24,.06);
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      min-height:100%;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .hubCard:hover{
+      transform: translateY(-1px);
+      border-color: rgba(176,11,85,.22);
+      box-shadow: 0 22px 64px rgba(176,11,85,.08);
+    }
+
+    .hubHead{
+      padding:14px 14px 0 14px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .iconBubble{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(17,16,24,.08);
+      background:
+        radial-gradient(80px 40px at 20% 20%, rgba(139,211,255,.35), transparent 60%),
+        linear-gradient(135deg, rgba(176,11,85,.10), rgba(109,40,217,.08)),
+        rgba(255,255,255,.9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      box-shadow: 0 12px 26px rgba(17,16,24,.06);
+      flex:0 0 auto;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      max-width:100%;
+      white-space:nowrap;
+      border:1px solid rgba(17,16,24,.10);
+      background: rgba(255,255,255,.72);
+      color: rgba(17,16,24,.72);
+    }
+
+    .pill .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background: var(--blue);
+      box-shadow: 0 0 0 4px rgba(139,211,255,.18);
+      flex:0 0 auto;
+    }
+
+    .pill.live .dot{
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(88,201,154,.16);
+    }
+
+    .pill.soon .dot{
+      background: var(--pink);
+      box-shadow: 0 0 0 4px rgba(176,11,85,.16);
+    }
+
+    .hubBody{
+      padding:12px 14px 14px 14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .hubTitle{
+      margin:0;
+      font-size:16px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      line-height:1.2;
+    }
+
+    .hubDesc{
+      color: rgba(17,16,24,.70);
+      font-size:13px;
+      line-height:1.5;
+      min-height: calc(1.5em * 3);
+    }
+
+    .tags{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(17,16,24,.10);
+      background: rgba(255,255,255,.72);
+      color: rgba(17,16,24,.72);
+      white-space:nowrap;
+    }
+
+    .hubActions{
+      padding:0 14px 14px 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .miniLink{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(17,16,24,.10);
+      background: rgba(255,255,255,.80);
+      font-weight:1000;
+      font-size:13px;
+      cursor:pointer;
+      white-space:nowrap;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+    }
+
+    .miniLink:hover{
+      transform: translateY(-1px);
+      border-color: rgba(176,11,85,.22);
+      box-shadow: 0 12px 30px rgba(176,11,85,.08);
+    }
+
+    .miniLink.primary{
+      border-color: rgba(176,11,85,.28);
+      background: linear-gradient(135deg, rgba(176,11,85,.14), rgba(109,40,217,.10));
+    }
+
+    .empty{
+      padding:18px 12px;
+      border-radius: var(--radius2);
+      border:1px dashed rgba(17,16,24,.18);
+      background: rgba(255,255,255,.70);
+      color: rgba(17,16,24,.65);
+      font-size:13px;
+      line-height:1.45;
+      margin-top:14px;
+    }
+
+    .tipList{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .tip{
+      border:1px solid rgba(17,16,24,.08);
+      background: rgba(255,255,255,.72);
+      border-radius:16px;
+      padding:12px;
+      color: rgba(17,16,24,.76);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      background: rgba(17,16,24,.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(17,16,24,.06);
+    }
+
+    @media (max-width: 760px){
+      .topbar{
+        grid-template-columns: 1fr;
+      }
+      .topActions{
+        justify-content:flex-start;
+      }
+      .chip{
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <img src="logo.png" alt="uZone logo" />
+        <div class="brandText">
+          <b>uZone Admin</b>
+          <span id="subline">Checking access…</span>
+        </div>
+      </div>
+
+      <div class="topActions">
+        <span class="chip" id="adminChip">Admin: —</span>
+        <button class="btn primary" id="refreshBtn" type="button">Refresh</button>
+        <button class="btn danger" id="logoutBtn" type="button">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="banner">
+      <div class="bannerTop">
+        <div>
+          <h1>Admin hub</h1>
+          <p>
+            Signed-in admin landing page. Add as many cards here as you want for internal tools like
+            verifications, host hide and seek, users, payouts, or anything else.
+          </p>
+        </div>
+
+        <div class="miniBtns">
+          <a class="btn primary" href="verifications.html">Open verifications</a>
+          <a class="btn" href="hosthideandseek.html">Open host hide and seek</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardInner">
+        <div class="hRow">
+          <div>
+            <h2 class="h1">Tools</h2>
+            <div class="sub">Quick links for signed-in admins only.</div>
+          </div>
+        </div>
+
+        <div class="msg" id="msgBox" aria-live="polite"></div>
+
+        <div class="hubGrid" id="hubGrid"></div>
+
+        <div class="empty" id="emptyBox" style="display:none;">
+          No cards found.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardInner">
+        <div>
+          <h2 class="h1">How to add more cards</h2>
+          <div class="sub">Just duplicate one object in the <code>TOOLS</code> array near the top of the script.</div>
+        </div>
+
+        <div class="tipList">
+          <div class="tip">
+            Example file link: <code>{ title: "Users", href: "users.html" }</code>
+          </div>
+          <div class="tip">
+            You can change the badge, icon, description, and tags without touching the auth logic.
+          </div>
+          <div class="tip">
+            Since your current admin pages already protect access with Firebase auth and an allowlist,
+            this page uses the same pattern before showing anything. :contentReference[oaicite:2]{index=2}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_k18vbiBsLhQB7PzgEVT9PEI_30Mu0kg",
+      authDomain: "uzone-6148d.firebaseapp.com",
+      databaseURL: "https://uzone-6148d-default-rtdb.firebaseio.com",
+      projectId: "uzone-6148d",
+      storageBucket: "uzone-6148d.firebasestorage.app",
+      messagingSenderId: "88783701381",
+      appId: "1:88783701381:web:4f6c4b1ad8b26d6fa6f0ec",
+      measurementId: "G-HKL5246YMC"
+    };
+
+    const ADMIN_EMAILS = new Set([
+      "uzoneconf@gmail.com"
+    ]);
+
+    const TOOLS = [
+      {
+        title: "Verifications",
+        href: "verifications.html",
+        icon: "✅",
+        status: "Live",
+        statusClass: "live",
+        description: "Review pending student verification requests, inspect uploaded images, and verify or nullify users.",
+        tags: ["Admin", "Queue", "Review"],
+        cta: "Open"
+      },
+      {
+        title: "Host Hide and Seek",
+        href: "hosthideandseek.html",
+        icon: "🎯",
+        status: "Soon",
+        statusClass: "soon",
+        description: "Placeholder card for your host hide and seek tool. Link is already ready for when the page exists.",
+        tags: ["Game", "Host", "Tool"],
+        cta: "Open"
+      }
+    ];
+
+    const app = initializeApp(firebaseConfig);
+    try { if (await analyticsSupported()) getAnalytics(app); } catch (_) {}
+    const auth = getAuth(app);
+
+    const subline = document.getElementById("subline");
+    const adminChip = document.getElementById("adminChip");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const msgBox = document.getElementById("msgBox");
+    const hubGrid = document.getElementById("hubGrid");
+    const emptyBox = document.getElementById("emptyBox");
+
+    function setMsg(text, kind = ""){
+      msgBox.style.display = text ? "block" : "none";
+      msgBox.textContent = text || "";
+      msgBox.className = "msg" + (kind ? " " + kind : "");
+    }
+
+    function isAllowedAdmin(user){
+      const email = (user?.email || "").toLowerCase().trim();
+      return !!email && ADMIN_EMAILS.has(email);
+    }
+
+    function renderTools(){
+      hubGrid.innerHTML = "";
+      emptyBox.style.display = TOOLS.length ? "none" : "block";
+
+      TOOLS.forEach(tool => {
+        const card = document.createElement("article");
+        card.className = "hubCard";
+
+        const head = document.createElement("div");
+        head.className = "hubHead";
+
+        const icon = document.createElement("div");
+        icon.className = "iconBubble";
+        icon.textContent = tool.icon || "🧩";
+
+        const pill = document.createElement("div");
+        pill.className = "pill " + (tool.statusClass || "");
+        pill.innerHTML = `<span class="dot"></span><span>${tool.status || "Tool"}</span>`;
+
+        head.appendChild(icon);
+        head.appendChild(pill);
+
+        const body = document.createElement("div");
+        body.className = "hubBody";
+
+        const title = document.createElement("h3");
+        title.className = "hubTitle";
+        title.textContent = tool.title || "Untitled";
+
+        const desc = document.createElement("div");
+        desc.className = "hubDesc";
+        desc.textContent = tool.description || "";
+
+        const tags = document.createElement("div");
+        tags.className = "tags";
+        (tool.tags || []).forEach(t => {
+          const tag = document.createElement("span");
+          tag.className = "tag";
+          tag.textContent = t;
+          tags.appendChild(tag);
+        });
+
+        body.appendChild(title);
+        body.appendChild(desc);
+        if ((tool.tags || []).length) body.appendChild(tags);
+
+        const actions = document.createElement("div");
+        actions.className = "hubActions";
+
+        const open = document.createElement("a");
+        open.className = "miniLink primary";
+        open.href = tool.href || "#";
+        open.textContent = tool.cta || "Open";
+
+        actions.appendChild(open);
+
+        card.appendChild(head);
+        card.appendChild(body);
+        card.appendChild(actions);
+
+        hubGrid.appendChild(card);
+      });
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      if (!isAllowedAdmin(user)) {
+        setMsg("This account is not in the admin allowlist.", "error");
+        await signOut(auth);
+        window.location.href = "index.html";
+        return;
+      }
+
+      adminChip.textContent = `Admin: ${user.email || "—"}`;
+      subline.textContent = "Signed in";
+      renderTools();
+      setMsg("Hub loaded.", "ok");
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+
+    refreshBtn.addEventListener("click", () => {
+      setMsg("");
+      renderTools();
+      setMsg("Cards refreshed.", "ok");
+    });
+  </script>
+</body>
+</html>
