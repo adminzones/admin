@@ -3,176 +3,163 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>uZone • Host Hide & Seek</title>
+  <title>uZone • Guest List Host</title>
   <link rel="icon" type="image/png" href="logo.png" />
   <meta name="color-scheme" content="light" />
 
   <style>
     :root{
-      --bg:#f8f7ff;
-      --bg2:#fcfbff;
-      --ink:#111018;
-      --muted:rgba(17,16,24,.62);
+      --bg:#f7f7fb;
+      --card:#ffffff;
+      --card2:#fbfbff;
+      --text:#14141b;
+      --muted:#66687a;
+      --border:#e7e8f0;
+      --shadow:0 18px 50px rgba(20,20,27,.08);
 
-      --pink:#b00b55;
-      --purple:#6d28d9;
-      --blue:#8bd3ff;
-      --green:#58c99a;
-      --orange:#ef9f27;
-
-      --card:rgba(255,255,255,.88);
-      --border:rgba(17,16,24,.10);
-      --shadow:0 18px 60px rgba(17,16,24,.08);
-
-      --radius:20px;
-      --radius2:16px;
+      --accent:#6d28d9;
+      --accent2:#b00b55;
+      --good:#1f9d67;
+      --goodBg:#eaf8f1;
       --danger:#c6285d;
-      --success:#2f9e6f;
-      --warn:#9b6200;
+      --dangerBg:#fdeef3;
+      --warn:#a76a00;
+      --warnBg:#fff6e5;
     }
 
     *{box-sizing:border-box}
     html,body{min-height:100%}
-
     body{
       margin:0;
-      color:var(--ink);
+      color:var(--text);
       font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       background:
-        radial-gradient(1200px 700px at 10% -10%, rgba(139,211,255,.20), transparent 60%),
-        radial-gradient(1000px 600px at 100% 0%, rgba(176,11,85,.08), transparent 58%),
-        radial-gradient(1100px 700px at 50% 100%, rgba(109,40,217,.10), transparent 62%),
-        linear-gradient(180deg, #fbfaff 0%, #f8f7ff 45%, #fbfbff 100%);
-      background-attachment:fixed;
+        radial-gradient(900px 500px at 0% 0%, rgba(109,40,217,.08), transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, rgba(176,11,85,.07), transparent 60%),
+        linear-gradient(180deg, #fbfbff 0%, #f7f7fb 100%);
     }
 
     a{color:inherit;text-decoration:none}
-    button,input,select,textarea{font:inherit}
+    button,input{font:inherit}
 
     header{
       position:sticky;
       top:0;
-      z-index:40;
+      z-index:50;
+      background:rgba(255,255,255,.82);
       backdrop-filter:blur(14px);
-      background:rgba(255,255,255,.72);
-      border-bottom:1px solid rgba(17,16,24,.08);
+      border-bottom:1px solid rgba(20,20,27,.06);
     }
 
     .topbar{
       width:min(1180px,92vw);
       margin:0 auto;
-      padding:12px 0;
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:14px;
+      padding:14px 0;
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
     .brand{
       display:flex;
       align-items:center;
-      gap:10px;
+      gap:12px;
       min-width:0;
     }
 
     .brand img{
-      width:38px;
-      height:38px;
+      width:42px;
+      height:42px;
+      border-radius:12px;
       object-fit:cover;
-      border-radius:10px;
-      border:1px solid rgba(17,16,24,.08);
-      background:rgba(255,255,255,.7);
+      border:1px solid var(--border);
+      background:#fff;
     }
 
     .brandText{
       display:grid;
       gap:2px;
-      min-width:0;
     }
 
     .brandText b{
-      font-size:14px;
+      font-size:15px;
       letter-spacing:.2px;
     }
 
     .brandText span{
       font-size:12px;
       color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
     }
 
     .topActions{
       display:flex;
       align-items:center;
-      justify-content:flex-end;
       gap:10px;
       flex-wrap:wrap;
     }
 
     .chip{
-      padding:8px 10px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
       border-radius:999px;
-      border:1px solid rgba(17,16,24,.10);
-      background:rgba(255,255,255,.84);
+      border:1px solid var(--border);
+      background:#fff;
       font-size:12px;
-      font-weight:900;
-      color:rgba(17,16,24,.78);
-      max-width:min(340px,72vw);
+      font-weight:800;
+      color:#3d4053;
+      max-width:min(360px,80vw);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      box-shadow:0 10px 24px rgba(17,16,24,.04);
     }
 
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(17,16,24,.12);
-      background:rgba(255,255,255,.84);
+      border:none;
+      outline:none;
       cursor:pointer;
-      font-weight:950;
-      font-size:13px;
-      transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease,background .12s ease,opacity .12s ease;
-      white-space:nowrap;
+      border-radius:14px;
+      padding:11px 14px;
+      font-weight:900;
+      transition:.15s ease;
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--border);
     }
 
     .btn:hover{
       transform:translateY(-1px);
-      border-color:rgba(176,11,85,.25);
-      box-shadow:0 14px 38px rgba(176,11,85,.08);
+      box-shadow:0 12px 28px rgba(20,20,27,.07);
     }
 
     .btn.primary{
-      border-color:rgba(176,11,85,.28);
-      background:linear-gradient(135deg, rgba(176,11,85,.14), rgba(109,40,217,.10));
+      background:linear-gradient(135deg, rgba(109,40,217,.12), rgba(176,11,85,.10));
+      border-color:rgba(109,40,217,.18);
     }
 
-    .btn.success{
-      border-color:rgba(88,201,154,.26);
-      background:rgba(88,201,154,.14);
-      color:var(--success);
-    }
-
-    .btn.warn{
-      border-color:rgba(239,159,39,.25);
-      background:rgba(239,159,39,.12);
-      color:var(--warn);
+    .btn.good{
+      background:var(--goodBg);
+      color:var(--good);
+      border-color:rgba(31,157,103,.18);
     }
 
     .btn.danger{
-      border-color:rgba(176,11,85,.22);
-      background:rgba(176,11,85,.08);
+      background:var(--dangerBg);
       color:var(--danger);
+      border-color:rgba(198,40,93,.18);
+    }
+
+    .btn.warn{
+      background:var(--warnBg);
+      color:var(--warn);
+      border-color:rgba(167,106,0,.18);
     }
 
     .btn:disabled{
-      opacity:.65;
+      opacity:.6;
       cursor:not-allowed;
       transform:none;
       box-shadow:none;
@@ -180,52 +167,77 @@
 
     main{
       width:min(1180px,92vw);
-      margin:22px auto 44px auto;
+      margin:24px auto 50px;
       display:grid;
       gap:18px;
     }
 
-    .hero,
-    .card{
-      border:1px solid rgba(255,255,255,.45);
-      background:linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.74));
-      border-radius:var(--radius);
+    .hero,.card{
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.88));
+      border:1px solid rgba(255,255,255,.7);
       box-shadow:var(--shadow);
+      border-radius:24px;
       overflow:hidden;
-      backdrop-filter:blur(10px);
     }
 
     .hero{
-      padding:18px;
-      background:
-        radial-gradient(650px 260px at 10% 35%, rgba(139,211,255,.34), transparent 60%),
-        radial-gradient(700px 280px at 65% 10%, rgba(109,40,217,.14), transparent 55%),
-        radial-gradient(620px 240px at 95% 75%, rgba(176,11,85,.14), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.74));
+      padding:22px;
     }
 
-    .hero h1,.h1,.h2,.h3,p{margin:0}
-    .hero h1{font-size:26px;letter-spacing:.2px}
-    .hero p{margin-top:10px;color:rgba(17,16,24,.70);font-size:14px;line-height:1.5;max-width:78ch}
+    .hero h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:.2px;
+    }
 
-    .cardInner{padding:18px}
-
-    .h1{font-size:18px;letter-spacing:.2px}
-    .sub{
+    .hero p{
+      margin:10px 0 0;
       color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-      margin-top:6px;
+      font-size:14px;
+      line-height:1.55;
+      max-width:78ch;
     }
 
-    .grid2{
+    .inlineCode{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:12px;
+      background:#f2f3f8;
+      border:1px solid #e7e8f0;
+      padding:2px 7px;
+      border-radius:8px;
+    }
+
+    .layout{
       display:grid;
       grid-template-columns:1.1fr .9fr;
-      gap:16px;
+      gap:18px;
       align-items:start;
     }
 
-    .stack{display:grid;gap:16px}
+    .cardInner{
+      padding:20px;
+    }
+
+    .titleRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .title{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+
+    .sub{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+    }
 
     .row2{
       display:grid;
@@ -233,188 +245,175 @@
       gap:12px;
     }
 
-    .row3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:12px;
-    }
-
     .field{
       display:grid;
       gap:8px;
+      margin-top:14px;
     }
 
     .field label{
       font-size:13px;
       font-weight:800;
-      color:rgba(17,16,24,.80);
+      color:#303244;
     }
 
-    .input,.select,.textarea{
+    .input{
       width:100%;
-      padding:13px 14px;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
       border-radius:14px;
-      border:1px solid rgba(17,16,24,.12);
-      background:rgba(255,255,255,.90);
-      color:var(--ink);
+      padding:13px 14px;
       outline:none;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.92);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.85);
     }
 
-    .textarea{
-      min-height:92px;
-      resize:vertical;
-    }
-
-    .input:focus,.select:focus,.textarea:focus{
-      border-color:rgba(176,11,85,.40);
-      box-shadow:0 0 0 4px rgba(176,11,85,.12);
+    .input:focus{
+      border-color:rgba(109,40,217,.35);
+      box-shadow:0 0 0 4px rgba(109,40,217,.10);
     }
 
     .actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:14px;
+      margin-top:16px;
     }
 
     .msg{
       display:none;
       margin-top:14px;
-      padding:12px 14px;
+      padding:13px 14px;
       border-radius:14px;
-      border:1px solid rgba(17,16,24,.08);
-      background:rgba(255,255,255,.72);
-      color:rgba(17,16,24,.74);
       font-size:13px;
       line-height:1.45;
       white-space:pre-line;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#43465c;
     }
 
     .msg.ok{
-      background:rgba(88,201,154,.14);
-      border-color:rgba(88,201,154,.22);
-      color:rgba(17,16,24,.86);
+      display:block;
+      background:var(--goodBg);
+      color:#166b47;
+      border-color:rgba(31,157,103,.18);
     }
 
     .msg.error{
-      background:rgba(176,11,85,.08);
-      border-color:rgba(176,11,85,.18);
-      color:#8c184a;
+      display:block;
+      background:var(--dangerBg);
+      color:#8b1842;
+      border-color:rgba(198,40,93,.18);
     }
 
     .msg.warn{
-      background:rgba(239,159,39,.12);
-      border-color:rgba(239,159,39,.18);
-      color:#8f5d00;
+      display:block;
+      background:var(--warnBg);
+      color:#8a5900;
+      border-color:rgba(167,106,0,.18);
     }
 
-    .infoGrid{
+    .stats{
       display:grid;
-      gap:14px;
-      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-      margin-top:14px;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:16px;
     }
 
-    .miniCard{
-      border:1px solid rgba(17,16,24,.08);
-      background:rgba(255,255,255,.76);
-      border-radius:16px;
-      padding:14px;
-      min-height:92px;
+    .stat{
+      padding:15px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:var(--card2);
     }
 
-    .miniCard b{
+    .stat b{
       display:block;
       font-size:13px;
       margin-bottom:6px;
     }
 
-    .miniCard span{
-      color:rgba(17,16,24,.68);
-      font-size:13px;
-      line-height:1.45;
-      word-break:break-word;
+    .stat span{
+      font-size:24px;
+      font-weight:950;
+      letter-spacing:.2px;
     }
 
-    .searchBar{
-      display:grid;
-      grid-template-columns:1fr 180px auto;
-      gap:10px;
+    .searchShell{
+      position:relative;
       margin-top:14px;
     }
 
-    .results,
-    .list{
+    .dropdown{
+      position:absolute;
+      top:calc(100% + 8px);
+      left:0;
+      right:0;
+      z-index:30;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 18px 40px rgba(20,20,27,.10);
+      padding:10px;
+      display:none;
+      max-height:360px;
+      overflow:auto;
+    }
+
+    .dropdown.open{display:block}
+
+    .resultItem{
       display:grid;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .empty{
-      border:1px dashed rgba(17,16,24,.14);
-      border-radius:14px;
-      padding:14px;
-      background:rgba(255,255,255,.54);
-      color:rgba(17,16,24,.68);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    .userRow,
-    .codeRow,
-    .joinRow{
-      border:1px solid rgba(17,16,24,.08);
-      background:rgba(255,255,255,.78);
-      border-radius:16px;
-      padding:12px;
-      display:grid;
-      gap:10px;
-    }
-
-    .userRow{
-      grid-template-columns:60px 1fr auto;
+      grid-template-columns:56px 1fr auto;
+      gap:12px;
       align-items:center;
-      cursor:pointer;
-      transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid transparent;
+      background:#fff;
+      transition:.12s ease;
+      margin-bottom:8px;
     }
 
-    .userRow:hover{
-      transform:translateY(-1px);
-      border-color:rgba(176,11,85,.16);
-      box-shadow:0 14px 36px rgba(17,16,24,.05);
-    }
+    .resultItem:last-child{margin-bottom:0}
 
-    .userRow.selected{
-      border-color:rgba(176,11,85,.28);
-      background:linear-gradient(135deg, rgba(176,11,85,.08), rgba(109,40,217,.05));
+    .resultItem:hover{
+      background:#faf9ff;
+      border-color:#ece7ff;
     }
 
     .avatar{
-      width:54px;
-      height:54px;
+      width:56px;
+      height:56px;
       border-radius:999px;
-      border:1px solid rgba(17,16,24,.10);
-      object-fit:cover;
-      background:rgba(255,255,255,.84);
+      overflow:hidden;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-weight:1000;
       font-size:20px;
-      color:white;
-      background-image:linear-gradient(135deg, rgba(176,11,85,.88), rgba(109,40,217,.70));
+      font-weight:1000;
+      color:#fff;
+      background:linear-gradient(135deg, var(--accent2), var(--accent));
+      border:1px solid rgba(20,20,27,.08);
     }
 
-    .userMain{
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .resultMain{
       min-width:0;
       display:grid;
       gap:6px;
     }
 
     .name{
+      font-size:15px;
       font-weight:950;
-      letter-spacing:.2px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -432,115 +431,83 @@
       gap:6px;
       padding:7px 10px;
       border-radius:999px;
-      border:1px solid rgba(17,16,24,.10);
-      background:rgba(255,255,255,.72);
+      border:1px solid var(--border);
+      background:#fff;
       font-size:12px;
-      font-weight:900;
-      color:rgba(17,16,24,.78);
+      font-weight:850;
+      color:#44485d;
       max-width:100%;
+      white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      white-space:nowrap;
     }
 
     .pill.good{
-      border-color:rgba(88,201,154,.24);
-      background:rgba(88,201,154,.12);
-      color:var(--success);
+      background:var(--goodBg);
+      color:var(--good);
+      border-color:rgba(31,157,103,.18);
     }
 
-    .pill.bad{
-      border-color:rgba(176,11,85,.20);
-      background:rgba(176,11,85,.08);
+    .pill.danger{
+      background:var(--dangerBg);
       color:var(--danger);
+      border-color:rgba(198,40,93,.18);
     }
 
-    .panelTitle{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .inlineCode{
-      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-      font-size:12px;
-      background:rgba(17,16,24,.06);
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid rgba(17,16,24,.06);
-    }
-
-    .assignBox{
+    .list{
       display:grid;
-      gap:12px;
-      margin-top:14px;
-      padding:14px;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .empty{
+      padding:16px;
       border-radius:16px;
-      border:1px solid rgba(17,16,24,.08);
-      background:rgba(255,255,255,.62);
+      border:1px dashed #d9dbe7;
+      color:var(--muted);
+      background:#fcfcff;
+      font-size:13px;
+      line-height:1.45;
     }
 
-    .codeListHead{
+    .guestRow{
+      display:grid;
+      grid-template-columns:56px 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:#fff;
+    }
+
+    .guestRight{
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
-      margin-bottom:10px;
+      justify-content:flex-end;
     }
 
-    .codeLabel{
-      font-weight:950;
-      letter-spacing:.2px;
-      font-size:14px;
-    }
-
-    .small{
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .joinRow{
-      grid-template-columns:1fr auto auto;
-      align-items:center;
-    }
-
-    .joinUser{
-      min-width:0;
-      display:grid;
-      gap:4px;
-    }
-
-    .joinUser b{
-      font-size:14px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .joinUser span{
+    .footerNote{
+      margin-top:12px;
       color:var(--muted);
       font-size:12px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      line-height:1.45;
     }
-
-    .muted{color:var(--muted)}
 
     @media (max-width:980px){
-      .grid2,.row3{grid-template-columns:1fr}
+      .layout{grid-template-columns:1fr}
     }
 
     @media (max-width:760px){
-      .topbar{grid-template-columns:1fr}
-      .topActions{justify-content:flex-start}
-      .searchBar,.row2{grid-template-columns:1fr}
-      .userRow{grid-template-columns:54px 1fr}
-      .userRow > .btn{grid-column:1 / -1}
-      .joinRow{grid-template-columns:1fr}
+      .row2,.stats{grid-template-columns:1fr}
+      .resultItem,.guestRow{grid-template-columns:56px 1fr}
+      .resultItem > .btn,
+      .guestRow > .guestRight{
+        grid-column:1 / -1;
+        justify-content:flex-start;
+      }
     }
   </style>
 </head>
@@ -550,7 +517,7 @@
       <div class="brand">
         <img src="logo.png" alt="uZone logo" />
         <div class="brandText">
-          <b>uZone • Host Hide & Seek</b>
+          <b>uZone • Guest List Host</b>
           <span id="subline">Checking sign-in…</span>
         </div>
       </div>
@@ -558,7 +525,7 @@
       <div class="topActions">
         <span class="chip" id="userChip">User: —</span>
         <a class="btn" href="hub.html">Hub</a>
-        <button class="btn" id="refreshAllBtn" type="button">Refresh</button>
+        <button class="btn" id="refreshBtn" type="button">Refresh</button>
         <button class="btn danger" id="logoutBtn" type="button">Log out</button>
       </div>
     </div>
@@ -566,199 +533,103 @@
 
   <main>
     <section class="hero">
-      <h1>Host event codes and player joins</h1>
+      <h1>Guest list builder</h1>
       <p>
-        Create or load your hide and seek event, make codes, assign them to users,
-        search people by name or U#, and watch who joined from <span class="inlineCode">uzone.ca/join.html</span>.
+        Search users by name, email, or U# and add or remove them from the guest list.
+        The guest list is saved to <span class="inlineCode">/events/{eventId}/guestList</span>
+        so you always keep track of who is on it.
       </p>
     </section>
 
-    <section class="grid2">
-      <div class="stack">
-        <section class="card">
-          <div class="cardInner">
-            <div class="panelTitle">
-              <div>
-                <h2 class="h1">Event setup</h2>
-                <div class="sub">
-                  This writes to <span class="inlineCode">/events</span> so your current join page can load the event and validate codes.
-                </div>
-              </div>
+    <section class="layout">
+      <section class="card">
+        <div class="cardInner">
+          <div class="titleRow">
+            <div>
+              <h2 class="title">Event + user search</h2>
+              <div class="sub">Choose the event ID you want to manage, then search and add users.</div>
+            </div>
+            <span class="pill" id="resultsChip">0 results</span>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="eventIdInput">Event ID</label>
+              <input id="eventIdInput" class="input" type="text" placeholder="hide-and-seek-night" autocomplete="off" />
             </div>
 
-            <div class="row3" style="margin-top:16px;">
-              <div class="field">
-                <label for="eventIdInput">Event ID</label>
-                <input id="eventIdInput" class="input" type="text" placeholder="hide-and-seek-night" autocomplete="off" />
-              </div>
-
-              <div class="field">
-                <label for="eventNameInput">Event name</label>
-                <input id="eventNameInput" class="input" type="text" placeholder="Campus Hide & Seek" autocomplete="off" />
-              </div>
-
-              <div class="field">
-                <label for="eventStatusSelect">Status</label>
-                <select id="eventStatusSelect" class="select">
-                  <option value="true">Active</option>
-                  <option value="false">Inactive</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row2" style="margin-top:12px;">
-              <div class="field">
-                <label for="eventPageInput">Event page after code is accepted</label>
-                <input id="eventPageInput" class="input" type="text" placeholder="hider.html or seeker.html or event page url" autocomplete="off" />
-              </div>
-
-              <div class="field">
-                <label for="joinPageInput">Join page</label>
-                <input id="joinPageInput" class="input" type="text" value="uzone.ca/join.html" autocomplete="off" />
-              </div>
-            </div>
-
-            <div class="actions">
-              <button class="btn primary" id="saveEventBtn" type="button">Create / save event</button>
-              <button class="btn warn" id="loadEventBtn" type="button">Load event</button>
-            </div>
-
-            <div class="msg" id="eventMsg" aria-live="polite"></div>
-
-            <div class="infoGrid">
-              <div class="miniCard">
-                <b>Current event</b>
-                <span id="currentEventLabel">—</span>
-              </div>
-              <div class="miniCard">
-                <b>Total valid codes</b>
-                <span id="validCodeCount">0</span>
-              </div>
-              <div class="miniCard">
-                <b>Assigned users</b>
-                <span id="assignedCount">0</span>
-              </div>
-              <div class="miniCard">
-                <b>Join records</b>
-                <span id="joinCount">0</span>
-              </div>
+            <div class="field">
+              <label for="eventNameInput">Event name</label>
+              <input id="eventNameInput" class="input" type="text" placeholder="Campus Hide & Seek" autocomplete="off" />
             </div>
           </div>
-        </section>
 
-        <section class="card">
-          <div class="cardInner">
-            <div class="panelTitle">
-              <div>
-                <h2 class="h1">Find users</h2>
-                <div class="sub">Search by name, school, program, UID, or U#.</div>
-              </div>
-              <span class="pill" id="userCountChip">0 users</span>
-            </div>
-
-            <div class="searchBar">
-              <input id="userSearchInput" class="input" type="search" placeholder="Search name or U#…" autocomplete="off" />
-              <select id="schoolFilter" class="select" aria-label="School filter">
-                <option value="">All schools</option>
-              </select>
-              <button class="btn" id="clearSearchBtn" type="button">Clear</button>
-            </div>
-
-            <div class="results" id="userResults"></div>
+          <div class="actions">
+            <button class="btn primary" id="loadEventBtn" type="button">Load / create event</button>
+            <button class="btn warn" id="clearSearchBtn" type="button">Clear search</button>
           </div>
-        </section>
-      </div>
 
-      <div class="stack">
-        <section class="card">
-          <div class="cardInner">
-            <div class="panelTitle">
-              <div>
-                <h2 class="h1">Assign codes</h2>
-                <div class="sub">
-                  Pick a user, then assign an existing code from the dropdown or generate a new one.
-                </div>
-              </div>
-            </div>
+          <div id="eventMsg" class="msg" aria-live="polite"></div>
 
-            <div class="assignBox">
-              <div class="field">
-                <label>Selected user</label>
-                <div class="miniCard">
-                  <b id="selectedUserName">No user selected</b>
-                  <span id="selectedUserMeta">Search and click a user first.</span>
-                </div>
-              </div>
-
-              <div class="row2">
-                <div class="field">
-                  <label for="codeSelect">Available code dropdown</label>
-                  <select id="codeSelect" class="select">
-                    <option value="">No codes yet</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label for="manualCodeInput">Or type a code</label>
-                  <input id="manualCodeInput" class="input" type="text" placeholder="HIDE-1001" autocomplete="off" />
-                </div>
-              </div>
-
-              <div class="row2">
-                <div class="field">
-                  <label for="newCodePrefixInput">New code prefix</label>
-                  <input id="newCodePrefixInput" class="input" type="text" value="HIDE" autocomplete="off" />
-                </div>
-
-                <div class="field">
-                  <label for="newCodeLengthInput">Random part length</label>
-                  <select id="newCodeLengthInput" class="select">
-                    <option value="4">4</option>
-                    <option value="5" selected>5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="actions">
-                <button class="btn success" id="generateCodeBtn" type="button">Generate new code</button>
-                <button class="btn primary" id="assignCodeBtn" type="button">Assign to selected user</button>
-                <button class="btn danger" id="unassignCodeBtn" type="button">Unassign selected user</button>
-              </div>
-
-              <div class="msg" id="assignMsg" aria-live="polite"></div>
+          <div class="field" style="margin-top:18px;">
+            <label for="userSearchInput">Search users</label>
+            <div class="searchShell">
+              <input
+                id="userSearchInput"
+                class="input"
+                type="search"
+                placeholder="Search by name, email, or U#"
+                autocomplete="off"
+              />
+              <div id="searchDropdown" class="dropdown"></div>
             </div>
           </div>
-        </section>
 
-        <section class="card">
-          <div class="cardInner">
-            <div class="codeListHead">
-              <div>
-                <div class="codeLabel">Assigned codes</div>
-                <div class="small">These codes are also added to the event's valid join code list.</div>
-              </div>
-              <button class="btn" id="copyCodesBtn" type="button">Copy codes</button>
-            </div>
-
-            <div class="list" id="assignedCodesList"></div>
+          <div class="footerNote">
+            Click a user in the dropdown to preview them, then use add or remove.
           </div>
-        </section>
 
-        <section class="card">
-          <div class="cardInner">
-            <div class="codeListHead">
-              <div>
-                <div class="codeLabel">Live joins from join.html</div>
-                <div class="small">When someone enters a valid code on the join page, they show up here.</div>
-              </div>
-            </div>
-
-            <div class="list" id="joinsList"></div>
+          <div class="field" style="margin-top:18px;">
+            <label>Selected user</label>
+            <div id="selectedUserBox" class="empty">No user selected yet.</div>
           </div>
-        </section>
-      </div>
+
+          <div class="actions">
+            <button class="btn good" id="addSelectedBtn" type="button">Add selected user</button>
+            <button class="btn danger" id="removeSelectedBtn" type="button">Remove selected user</button>
+          </div>
+
+          <div id="guestMsg" class="msg" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="cardInner">
+          <div class="titleRow">
+            <div>
+              <h2 class="title">Guest list</h2>
+              <div class="sub">Everyone currently on this event’s guest list.</div>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <b>Current event</b>
+              <span id="currentEventStat">—</span>
+            </div>
+            <div class="stat">
+              <b>Total users loaded</b>
+              <span id="totalUsersStat">0</span>
+            </div>
+            <div class="stat">
+              <b>Guests on list</b>
+              <span id="guestCountStat">0</span>
+            </div>
+          </div>
+
+          <div id="guestList" class="list"></div>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -802,648 +673,338 @@
     try { if (await analyticsSupported()) getAnalytics(app); } catch (_) {}
 
     const auth = getAuth(app);
-    const rtdb = getDatabase(app);
+    const db = getDatabase(app);
     const fdb = getFirestore(app);
 
     const els = {
       subline: document.getElementById("subline"),
       userChip: document.getElementById("userChip"),
-      refreshAllBtn: document.getElementById("refreshAllBtn"),
+      refreshBtn: document.getElementById("refreshBtn"),
       logoutBtn: document.getElementById("logoutBtn"),
 
       eventIdInput: document.getElementById("eventIdInput"),
       eventNameInput: document.getElementById("eventNameInput"),
-      eventStatusSelect: document.getElementById("eventStatusSelect"),
-      eventPageInput: document.getElementById("eventPageInput"),
-      joinPageInput: document.getElementById("joinPageInput"),
-      saveEventBtn: document.getElementById("saveEventBtn"),
       loadEventBtn: document.getElementById("loadEventBtn"),
+      clearSearchBtn: document.getElementById("clearSearchBtn"),
       eventMsg: document.getElementById("eventMsg"),
 
-      currentEventLabel: document.getElementById("currentEventLabel"),
-      validCodeCount: document.getElementById("validCodeCount"),
-      assignedCount: document.getElementById("assignedCount"),
-      joinCount: document.getElementById("joinCount"),
-
       userSearchInput: document.getElementById("userSearchInput"),
-      schoolFilter: document.getElementById("schoolFilter"),
-      clearSearchBtn: document.getElementById("clearSearchBtn"),
-      userResults: document.getElementById("userResults"),
-      userCountChip: document.getElementById("userCountChip"),
+      searchDropdown: document.getElementById("searchDropdown"),
+      resultsChip: document.getElementById("resultsChip"),
 
-      selectedUserName: document.getElementById("selectedUserName"),
-      selectedUserMeta: document.getElementById("selectedUserMeta"),
-      codeSelect: document.getElementById("codeSelect"),
-      manualCodeInput: document.getElementById("manualCodeInput"),
-      newCodePrefixInput: document.getElementById("newCodePrefixInput"),
-      newCodeLengthInput: document.getElementById("newCodeLengthInput"),
-      generateCodeBtn: document.getElementById("generateCodeBtn"),
-      assignCodeBtn: document.getElementById("assignCodeBtn"),
-      unassignCodeBtn: document.getElementById("unassignCodeBtn"),
-      assignMsg: document.getElementById("assignMsg"),
+      selectedUserBox: document.getElementById("selectedUserBox"),
+      addSelectedBtn: document.getElementById("addSelectedBtn"),
+      removeSelectedBtn: document.getElementById("removeSelectedBtn"),
+      guestMsg: document.getElementById("guestMsg"),
 
-      assignedCodesList: document.getElementById("assignedCodesList"),
-      joinsList: document.getElementById("joinsList"),
-      copyCodesBtn: document.getElementById("copyCodesBtn")
+      currentEventStat: document.getElementById("currentEventStat"),
+      totalUsersStat: document.getElementById("totalUsersStat"),
+      guestCountStat: document.getElementById("guestCountStat"),
+      guestList: document.getElementById("guestList")
     };
 
     let allUsers = [];
     let selectedUser = null;
     let currentEventId = "";
-    let currentEvent = null;
-    let currentAssignments = {};
-    let currentAllowedCodes = {};
-    let currentJoins = {};
-    let eventValueRef = null;
+    let currentEventValue = null;
+    let currentGuestList = {};
+    let eventListenerRef = null;
 
-    function showMsg(el, text, kind = "") {
-      el.style.display = text ? "block" : "none";
-      el.textContent = text || "";
-      el.className = "msg" + (kind ? " " + kind : "");
+    function showMsg(el, text = "", kind = "") {
+      el.textContent = text;
+      el.className = "msg";
+      if (!text) {
+        el.style.display = "none";
+        return;
+      }
+      el.style.display = "block";
+      if (kind) el.classList.add(kind);
     }
 
-    function escapeHtml(value){
+    function escapeHtml(value) {
       return String(value ?? "").replace(/[&<>"']/g, (m) => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      })[m]);
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[m]));
     }
 
     function escapeAttr(value){
-      return escapeHtml(value).replaceAll("\n", "").replaceAll("\r", "");
+      return escapeHtml(value).replaceAll("\n"," ").replaceAll("\r"," ");
     }
 
-    function norm(value){
-      return (value ?? "").toString().trim().toLowerCase();
-    }
-
-    function normalizeCode(value){
-      return (value ?? "").toString().trim().toUpperCase().replace(/\s+/g, "-");
-    }
-
-    function slugify(value){
-      return (value ?? "")
-        .toString()
+    function slugify(value) {
+      return String(value ?? "")
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
     }
 
-    function displayName(user){
+    function norm(value) {
+      return String(value ?? "").trim().toLowerCase();
+    }
+
+    function displayName(user) {
       return (user?.name && user.name.trim())
         ? user.name.trim()
         : (user?.displayName && user.displayName.trim())
         ? user.displayName.trim()
         : (user?.email && user.email.trim())
         ? user.email.trim()
-        : "Unnamed";
+        : "Unnamed user";
     }
 
-    function getPublicId(user){
-      const v = (user?.publicId ?? user?.publicID ?? "").toString().trim();
-      return v || "U?";
+    function publicId(user) {
+      return String(user?.publicId ?? user?.publicID ?? "").trim() || "U?";
     }
 
-    function getAvatar(user){
-      return user?.photoURL || user?.photoUrl || user?.avatarUrl || user?.avatar || "";
-    }
-
-    function makeAvatar(user){
-      const avatar = getAvatar(user);
-      if (avatar) {
-        return `<img class="avatar" src="${escapeAttr(avatar)}" alt="Avatar" />`;
+    function avatarHtml(user) {
+      const src = user?.photoURL || user?.photoUrl || user?.avatarUrl || user?.avatar || "";
+      if (src) {
+        return `<div class="avatar"><img src="${escapeAttr(src)}" alt="Avatar"></div>`;
       }
-      const initial = displayName(user).charAt(0).toUpperCase() || "?";
-      return `<div class="avatar" aria-label="Avatar">${escapeHtml(initial)}</div>`;
+      return `<div class="avatar">${escapeHtml(displayName(user).charAt(0).toUpperCase() || "?")}</div>`;
     }
 
-    function extractPublicNumber(publicId){
-      const m = String(publicId || "").match(/(\d+)/);
-      return m ? parseInt(m[1], 10) : null;
+    function eventRef(eventId) {
+      return ref(db, `events/${eventId}`);
     }
 
-    function selectedUserAssignment(){
-      if (!selectedUser) return null;
-      return currentAssignments[selectedUser.__uid] || null;
+    function guestListRef(eventId) {
+      return ref(db, `events/${eventId}/guestList`);
     }
 
-    function ensureEventId(){
-      let id = slugify(els.eventIdInput.value);
-      if (!id) {
-        id = slugify(els.eventNameInput.value);
-        if (id) els.eventIdInput.value = id;
+    function refreshStats() {
+      els.currentEventStat.textContent = currentEventId || "—";
+      els.totalUsersStat.textContent = String(allUsers.length);
+      els.guestCountStat.textContent = String(Object.keys(currentGuestList || {}).length);
+    }
+
+    function renderSelectedUser() {
+      if (!selectedUser) {
+        els.selectedUserBox.className = "empty";
+        els.selectedUserBox.textContent = "No user selected yet.";
+        return;
       }
-      return id;
+
+      const onList = !!currentGuestList[selectedUser.__uid];
+      els.selectedUserBox.className = "";
+      els.selectedUserBox.innerHTML = `
+        <div class="guestRow" style="margin:0;">
+          ${avatarHtml(selectedUser)}
+          <div class="resultMain">
+            <div class="name">${escapeHtml(displayName(selectedUser))}</div>
+            <div class="meta">
+              <span class="pill">🆔 ${escapeHtml(publicId(selectedUser))}</span>
+              ${selectedUser.email ? `<span class="pill">${escapeHtml(selectedUser.email)}</span>` : ""}
+              ${onList ? `<span class="pill good">On guest list</span>` : `<span class="pill danger">Not on guest list</span>`}
+            </div>
+          </div>
+        </div>
+      `;
     }
 
-    function eventRef(id){
-      return ref(rtdb, `events/${id}`);
-    }
-
-    function usersSort(a, b){
-      const an = extractPublicNumber(getPublicId(a));
-      const bn = extractPublicNumber(getPublicId(b));
-      const aHas = Number.isFinite(an);
-      const bHas = Number.isFinite(bn);
-
-      if (aHas && bHas) return an - bn;
-      if (aHas && !bHas) return -1;
-      if (!aHas && bHas) return 1;
-      return displayName(a).localeCompare(displayName(b));
-    }
-
-    function populateSchoolOptions(users){
-      const schools = Array.from(new Set(
-        users
-          .map(u => (u.university || "").toString().trim())
-          .filter(Boolean)
-      )).sort((a, b) => a.localeCompare(b));
-
-      els.schoolFilter.querySelectorAll("option:not(:first-child)").forEach(o => o.remove());
-
-      for (const school of schools) {
-        const opt = document.createElement("option");
-        opt.value = school;
-        opt.textContent = school;
-        els.schoolFilter.appendChild(opt);
-      }
-    }
-
-    function renderUsers(){
+    function filteredUsers() {
       const q = norm(els.userSearchInput.value);
-      const school = (els.schoolFilter.value || "").trim();
+      if (!q) return [];
 
-      const filtered = allUsers
+      return allUsers
         .filter(user => {
-          const uid = (user.__uid || "").toString();
           const blob = [
             displayName(user),
             user.email || "",
-            user.university || "",
-            user.program || "",
-            getPublicId(user),
-            uid
+            publicId(user),
+            user.__uid || ""
           ].join(" ").toLowerCase();
 
-          if (q && !blob.includes(q)) return false;
-          if (school && (user.university || "").toString().trim() !== school) return false;
-          return true;
+          return blob.includes(q);
         })
-        .sort(usersSort);
+        .sort((a, b) => displayName(a).localeCompare(displayName(b)))
+        .slice(0, 50);
+    }
 
-      els.userResults.innerHTML = "";
-      els.userCountChip.textContent = `${filtered.length} result${filtered.length === 1 ? "" : "s"} • ${allUsers.length} total`;
+    function renderSearchDropdown() {
+      const q = norm(els.userSearchInput.value);
+      const results = filteredUsers();
 
-      if (!filtered.length) {
-        els.userResults.innerHTML = `<div class="empty">No users found. Try a different name or U#.</div>`;
+      els.resultsChip.textContent = `${results.length} result${results.length === 1 ? "" : "s"}`;
+
+      if (!q) {
+        els.searchDropdown.classList.remove("open");
+        els.searchDropdown.innerHTML = "";
         return;
       }
 
-      const frag = document.createDocumentFragment();
+      if (!results.length) {
+        els.searchDropdown.innerHTML = `<div class="empty">No users found for that search.</div>`;
+        els.searchDropdown.classList.add("open");
+        return;
+      }
 
-      for (const user of filtered) {
-        const row = document.createElement("div");
-        row.className = "userRow" + (selectedUser?.__uid === user.__uid ? " selected" : "");
-
-        const assignment = currentAssignments[user.__uid] || null;
-        const pills = [
-          `<span class="pill">🆔 ${escapeHtml(getPublicId(user))}</span>`
-        ];
-
-        if (user.university) pills.push(`<span class="pill">🏫 ${escapeHtml(user.university)}</span>`);
-        if (user.program) pills.push(`<span class="pill">🎓 ${escapeHtml(user.program)}</span>`);
-        if (assignment?.code) pills.push(`<span class="pill good">🎟 ${escapeHtml(assignment.code)}</span>`);
-
-        row.innerHTML = `
-          ${makeAvatar(user)}
-          <div class="userMain">
-            <div class="name">${escapeHtml(displayName(user))}</div>
-            <div class="meta">${pills.join("")}</div>
+      els.searchDropdown.innerHTML = results.map(user => {
+        const onList = !!currentGuestList[user.__uid];
+        return `
+          <div class="resultItem" data-uid="${escapeAttr(user.__uid)}">
+            ${avatarHtml(user)}
+            <div class="resultMain">
+              <div class="name">${escapeHtml(displayName(user))}</div>
+              <div class="meta">
+                <span class="pill">🆔 ${escapeHtml(publicId(user))}</span>
+                ${user.email ? `<span class="pill">${escapeHtml(user.email)}</span>` : ""}
+                ${onList ? `<span class="pill good">On guest list</span>` : ""}
+              </div>
+            </div>
+            <button class="btn primary" type="button">Select</button>
           </div>
-          <button class="btn primary" type="button">Select</button>
         `;
+      }).join("");
 
-        row.addEventListener("click", () => {
+      els.searchDropdown.classList.add("open");
+
+      els.searchDropdown.querySelectorAll(".resultItem").forEach(item => {
+        item.addEventListener("click", () => {
+          const uid = item.getAttribute("data-uid");
+          const user = allUsers.find(u => u.__uid === uid);
+          if (!user) return;
           selectedUser = user;
           renderSelectedUser();
-          renderUsers();
+          els.searchDropdown.classList.remove("open");
         });
 
-        row.querySelector("button")?.addEventListener("click", (e) => {
+        item.querySelector("button")?.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
+          const uid = item.getAttribute("data-uid");
+          const user = allUsers.find(u => u.__uid === uid);
+          if (!user) return;
           selectedUser = user;
           renderSelectedUser();
-          renderUsers();
+          els.searchDropdown.classList.remove("open");
         });
-
-        frag.appendChild(row);
-      }
-
-      els.userResults.appendChild(frag);
+      });
     }
 
-    function renderSelectedUser(){
-      if (!selectedUser) {
-        els.selectedUserName.textContent = "No user selected";
-        els.selectedUserMeta.textContent = "Search and click a user first.";
-        return;
-      }
+    function renderGuestList() {
+      const entries = Object.entries(currentGuestList || {}).map(([uid, value]) => ({ uid, ...value }));
+      entries.sort((a, b) => {
+        const an = String(a.name || a.displayName || a.email || "").toLowerCase();
+        const bn = String(b.name || b.displayName || b.email || "").toLowerCase();
+        return an.localeCompare(bn);
+      });
 
-      const assignment = selectedUserAssignment();
-      const bits = [
-        getPublicId(selectedUser)
-      ];
+      els.guestList.innerHTML = "";
 
-      if (selectedUser.email) bits.push(selectedUser.email);
-      if (selectedUser.university) bits.push(selectedUser.university);
-      if (selectedUser.program) bits.push(selectedUser.program);
-      if (assignment?.code) bits.push(`Assigned code: ${assignment.code}`);
-
-      els.selectedUserName.textContent = displayName(selectedUser);
-      els.selectedUserMeta.textContent = bits.join(" • ");
-    }
-
-    function extractUnassignedCodes(){
-      const assigned = new Set(
-        Object.values(currentAssignments || {})
-          .map(v => normalizeCode(v?.code))
-          .filter(Boolean)
-      );
-
-      return Object.keys(currentAllowedCodes || {})
-        .map(normalizeCode)
-        .filter(Boolean)
-        .filter(code => !assigned.has(code))
-        .sort((a, b) => a.localeCompare(b));
-    }
-
-    function renderCodeDropdown(preferredCode = ""){
-      const available = extractUnassignedCodes();
-      els.codeSelect.innerHTML = "";
-
-      const first = document.createElement("option");
-      first.value = "";
-      first.textContent = available.length ? "Choose an unassigned code" : "No unassigned codes";
-      els.codeSelect.appendChild(first);
-
-      for (const code of available) {
-        const opt = document.createElement("option");
-        opt.value = code;
-        opt.textContent = code;
-        els.codeSelect.appendChild(opt);
-      }
-
-      if (preferredCode && available.includes(preferredCode)) {
-        els.codeSelect.value = preferredCode;
-      }
-    }
-
-    function renderAssignedCodes(){
-      const items = Object.entries(currentAssignments || {})
-        .map(([uid, value]) => ({ uid, ...value }))
-        .sort((a, b) => normalizeCode(a.code).localeCompare(normalizeCode(b.code)));
-
-      els.assignedCodesList.innerHTML = "";
-
-      if (!items.length) {
-        els.assignedCodesList.innerHTML = `<div class="empty">No codes have been assigned yet.</div>`;
+      if (!entries.length) {
+        els.guestList.innerHTML = `<div class="empty">No users are on the guest list yet.</div>`;
+        refreshStats();
         return;
       }
 
       const frag = document.createDocumentFragment();
 
-      for (const item of items) {
+      for (const guest of entries) {
         const row = document.createElement("div");
-        row.className = "codeRow";
+        row.className = "guestRow";
 
-        const line1 = document.createElement("div");
-        line1.innerHTML = `
-          <div class="name">${escapeHtml(item.name || item.displayName || item.email || item.uid || "Unknown user")}</div>
-          <div class="meta">
-            <span class="pill good">🎟 ${escapeHtml(item.code || "")}</span>
-            <span class="pill">🆔 ${escapeHtml(item.publicId || "U?")}</span>
-            ${item.email ? `<span class="pill">${escapeHtml(item.email)}</span>` : ""}
+        row.innerHTML = `
+          ${avatarHtml(guest)}
+          <div class="resultMain">
+            <div class="name">${escapeHtml(guest.name || guest.displayName || guest.email || guest.uid || "Unknown user")}</div>
+            <div class="meta">
+              <span class="pill">🆔 ${escapeHtml(guest.publicId || "U?")}</span>
+              ${guest.email ? `<span class="pill">${escapeHtml(guest.email)}</span>` : ""}
+              <span class="pill good">On guest list</span>
+            </div>
+          </div>
+          <div class="guestRight">
+            <button class="btn danger" type="button">Remove</button>
           </div>
         `;
 
-        const line2 = document.createElement("div");
-        line2.className = "actions";
-        line2.style.marginTop = "0";
-        line2.innerHTML = `
-          <button class="btn" type="button">Copy code</button>
-          <button class="btn danger" type="button">Remove</button>
-        `;
-
-        const [copyBtn, removeBtn] = line2.querySelectorAll("button");
-
-        copyBtn.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(item.code || "");
-            showMsg(els.assignMsg, `Copied code ${item.code}.`, "ok");
-          } catch (_) {
-            showMsg(els.assignMsg, `Copy failed. Code: ${item.code}`, "warn");
-          }
-        });
-
-        removeBtn.addEventListener("click", async () => {
+        row.querySelector("button")?.addEventListener("click", async () => {
           if (!currentEventId) return;
-          await remove(ref(rtdb, `events/${currentEventId}/assignments/${item.uid}`));
-          await syncCodesArray();
-          showMsg(els.assignMsg, `Removed assignment for ${item.name || item.email || item.uid}.`, "ok");
+          await remove(ref(db, `events/${currentEventId}/guestList/${guest.uid}`));
+          showMsg(els.guestMsg, `${guest.name || guest.email || "User"} removed from guest list.`, "ok");
         });
 
-        row.appendChild(line1);
-        row.appendChild(line2);
         frag.appendChild(row);
       }
 
-      els.assignedCodesList.appendChild(frag);
+      els.guestList.appendChild(frag);
+      refreshStats();
     }
 
-    function sortJoinEntries(entries){
-      return entries.sort((a, b) => {
-        const av = typeof a.joinedAt === "number" ? a.joinedAt : 0;
-        const bv = typeof b.joinedAt === "number" ? b.joinedAt : 0;
-        return bv - av;
-      });
-    }
+    function attachEventListener(eventId) {
+      if (eventListenerRef) off(eventListenerRef);
 
-    function formatJoinedAt(value){
-      if (typeof value === "number") {
-        try {
-          return new Date(value).toLocaleString();
-        } catch (_) {}
-      }
-      return "Joined recently";
-    }
-
-    function renderJoins(){
-      const items = sortJoinEntries(
-        Object.entries(currentJoins || {}).map(([uid, value]) => ({ uid, ...value }))
-      );
-
-      els.joinsList.innerHTML = "";
-
-      if (!items.length) {
-        els.joinsList.innerHTML = `<div class="empty">No one has joined this event from join.html yet.</div>`;
-        return;
-      }
-
-      const frag = document.createDocumentFragment();
-
-      for (const item of items) {
-        const row = document.createElement("div");
-        row.className = "joinRow";
-
-        const user = document.createElement("div");
-        user.className = "joinUser";
-        user.innerHTML = `
-          <b>${escapeHtml(item.name || item.email || item.uid || "Unknown user")}</b>
-          <span>${escapeHtml(item.email || "—")} • Code: ${escapeHtml(item.code || "—")} • ${escapeHtml(formatJoinedAt(item.joinedAt))}</span>
-        `;
-
-        const tag = document.createElement("div");
-        const assignment = Object.values(currentAssignments || {}).find(v => normalizeCode(v?.code) === normalizeCode(item.code));
-        tag.innerHTML = assignment
-          ? `<span class="pill good">Assigned</span>`
-          : `<span class="pill bad">Joined with untracked code</span>`;
-
-        const copy = document.createElement("button");
-        copy.className = "btn";
-        copy.type = "button";
-        copy.textContent = "Copy email";
-
-        copy.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(item.email || "");
-            showMsg(els.assignMsg, `Copied ${item.email || "blank email"}.`, "ok");
-          } catch (_) {
-            showMsg(els.assignMsg, "Could not copy email.", "warn");
-          }
-        });
-
-        row.appendChild(user);
-        row.appendChild(tag);
-        row.appendChild(copy);
-        frag.appendChild(row);
-      }
-
-      els.joinsList.appendChild(frag);
-    }
-
-    function refreshStats(){
-      els.currentEventLabel.textContent = currentEventId || "—";
-      els.validCodeCount.textContent = String(Object.keys(currentAllowedCodes || {}).length);
-      els.assignedCount.textContent = String(Object.keys(currentAssignments || {}).length);
-      els.joinCount.textContent = String(Object.keys(currentJoins || {}).length);
-    }
-
-    async function syncCodesArray(){
-      if (!currentEventId) return;
-
-      const allowed = Object.keys(currentAllowedCodes || {})
-        .map(normalizeCode)
-        .filter(Boolean)
-        .sort((a, b) => a.localeCompare(b));
-
-      await update(eventRef(currentEventId), {
-        codes: allowed,
-        updatedAt: serverTimestamp()
-      });
-    }
-
-    async function ensureEventLoadedOrCreated(){
-      const id = ensureEventId();
-      if (!id) {
-        showMsg(els.eventMsg, "Enter an event ID or event name first.", "error");
-        els.eventIdInput.focus();
-        return null;
-      }
-
-      const name = els.eventNameInput.value.trim() || id;
-      const eventPage = els.eventPageInput.value.trim();
-      const joinPage = els.joinPageInput.value.trim() || "uzone.ca/join.html";
-      const active = els.eventStatusSelect.value === "true";
-
-      const existingSnap = await get(eventRef(id));
-
-      if (!existingSnap.exists()) {
-        await set(eventRef(id), {
-          name,
-          title: name,
-          eventName: name,
-          page: eventPage,
-          joinPage,
-          active,
-          allowedCodes: {},
-          assignments: {},
-          joins: {},
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        });
-      } else {
-        await update(eventRef(id), {
-          name,
-          title: name,
-          eventName: name,
-          page: eventPage,
-          joinPage,
-          active,
-          updatedAt: serverTimestamp()
-        });
-      }
-
-      currentEventId = id;
-      attachEventListener(id);
-      return id;
-    }
-
-    function fillEventForm(id, value){
-      currentEventId = id;
-      currentEvent = value || null;
-
-      els.eventIdInput.value = id || "";
-      els.eventNameInput.value = value?.name || value?.title || value?.eventName || id || "";
-      els.eventPageInput.value = value?.page || value?.eventPage || "";
-      els.joinPageInput.value = value?.joinPage || "uzone.ca/join.html";
-      els.eventStatusSelect.value = value?.active === false ? "false" : "true";
-    }
-
-    function attachEventListener(id){
-      if (eventValueRef) {
-        off(eventValueRef);
-      }
-
-      eventValueRef = eventRef(id);
-
-      onValue(eventValueRef, (snapshot) => {
-        const value = snapshot.val();
-
-        if (!value) {
-          currentEvent = null;
-          currentAssignments = {};
-          currentAllowedCodes = {};
-          currentJoins = {};
-          refreshStats();
-          renderCodeDropdown();
-          renderAssignedCodes();
-          renderJoins();
-          renderUsers();
-          return;
+      eventListenerRef = eventRef(eventId);
+      onValue(eventListenerRef, (snap) => {
+        const value = snap.val() || null;
+        currentEventValue = value;
+        currentGuestList = value?.guestList || {};
+        if (value?.name && !els.eventNameInput.value.trim()) {
+          els.eventNameInput.value = value.name;
         }
-
-        currentEvent = value;
-        currentAssignments = value.assignments || {};
-        currentAllowedCodes = value.allowedCodes || {};
-        currentJoins = value.joins || {};
-
-        fillEventForm(id, value);
-        refreshStats();
-        renderCodeDropdown();
-        renderAssignedCodes();
-        renderJoins();
         renderSelectedUser();
-        renderUsers();
+        renderSearchDropdown();
+        renderGuestList();
+        refreshStats();
       }, (error) => {
         console.error(error);
-        showMsg(els.eventMsg, "Could not listen to this event.", "error");
+        showMsg(els.eventMsg, "Could not listen to the event.", "error");
       });
     }
 
-    async function loadEvent(){
-      const id = ensureEventId();
+    async function loadOrCreateEvent() {
+      let id = slugify(els.eventIdInput.value);
+      const name = els.eventNameInput.value.trim();
+
+      if (!id && name) {
+        id = slugify(name);
+        els.eventIdInput.value = id;
+      }
+
       if (!id) {
-        showMsg(els.eventMsg, "Enter the event ID to load.", "error");
+        showMsg(els.eventMsg, "Enter an event ID or event name first.", "error");
         return;
       }
 
       const snap = await get(eventRef(id));
+
       if (!snap.exists()) {
-        showMsg(els.eventMsg, "That event does not exist yet.", "error");
-        return;
+        await set(eventRef(id), {
+          name: name || id,
+          guestList: {},
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+        showMsg(els.eventMsg, `Created event "${id}".`, "ok");
+      } else {
+        if (name) {
+          await update(eventRef(id), {
+            name,
+            updatedAt: serverTimestamp()
+          });
+        }
+        showMsg(els.eventMsg, `Loaded event "${id}".`, "ok");
       }
 
-      fillEventForm(id, snap.val());
+      currentEventId = id;
       attachEventListener(id);
-      showMsg(els.eventMsg, `Loaded event "${id}".`, "ok");
+      refreshStats();
     }
 
-    async function saveEvent(){
-      const id = await ensureEventLoadedOrCreated();
-      if (!id) return;
-      showMsg(els.eventMsg, `Saved event "${id}". It is now available on join.html.`, "ok");
-    }
-
-    function randomString(length){
-      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let out = "";
-      for (let i = 0; i < length; i++) {
-        out += chars[Math.floor(Math.random() * chars.length)];
-      }
-      return out;
-    }
-
-    function buildUniqueCode(){
-      const prefix = normalizeCode(els.newCodePrefixInput.value || "HIDE");
-      const len = Math.max(4, Math.min(7, Number(els.newCodeLengthInput.value || 5)));
-
-      let tries = 0;
-      while (tries < 1000) {
-        const code = prefix ? `${prefix}-${randomString(len)}` : randomString(len);
-        if (!currentAllowedCodes[code]) return code;
-        tries++;
-      }
-      return `${prefix}-${Date.now()}`;
-    }
-
-    async function generateNewCode(){
+    async function addSelectedUser() {
       if (!currentEventId) {
-        showMsg(els.assignMsg, "Create or load an event first.", "error");
-        return;
-      }
-
-      const code = buildUniqueCode();
-
-      await update(eventRef(currentEventId), {
-        [`allowedCodes/${code}`]: true,
-        updatedAt: serverTimestamp()
-      });
-
-      currentAllowedCodes[code] = true;
-      await syncCodesArray();
-      renderCodeDropdown(code);
-      els.manualCodeInput.value = code;
-      showMsg(els.assignMsg, `Generated new code ${code}.`, "ok");
-    }
-
-    async function assignCodeToSelectedUser(){
-      if (!currentEventId) {
-        showMsg(els.assignMsg, "Create or load an event first.", "error");
+        showMsg(els.guestMsg, "Load or create an event first.", "error");
         return;
       }
 
       if (!selectedUser) {
-        showMsg(els.assignMsg, "Select a user first.", "error");
-        return;
-      }
-
-      let code = normalizeCode(els.manualCodeInput.value) || normalizeCode(els.codeSelect.value);
-
-      if (!code) {
-        code = buildUniqueCode();
-      }
-
-      const existingOwner = Object.entries(currentAssignments || {}).find(([uid, value]) => {
-        return uid !== selectedUser.__uid && normalizeCode(value?.code) === code;
-      });
-
-      if (existingOwner) {
-        showMsg(els.assignMsg, `That code is already assigned to another user.`, "error");
+        showMsg(els.guestMsg, "Select a user first.", "error");
         return;
       }
 
@@ -1452,124 +1013,88 @@
         name: displayName(selectedUser),
         displayName: selectedUser.displayName || "",
         email: selectedUser.email || "",
-        publicId: getPublicId(selectedUser),
-        code,
-        assignedAt: Date.now()
+        publicId: publicId(selectedUser),
+        addedAt: Date.now()
       };
 
       await update(eventRef(currentEventId), {
-        [`allowedCodes/${code}`]: true,
-        [`assignments/${selectedUser.__uid}`]: payload,
+        [`guestList/${selectedUser.__uid}`]: payload,
         updatedAt: serverTimestamp()
       });
 
-      currentAllowedCodes[code] = true;
-      currentAssignments[selectedUser.__uid] = payload;
-
-      await syncCodesArray();
-      els.manualCodeInput.value = "";
-      renderCodeDropdown();
-      renderAssignedCodes();
-      renderSelectedUser();
-      renderUsers();
-      refreshStats();
-
-      showMsg(els.assignMsg, `Assigned ${code} to ${displayName(selectedUser)}.`, "ok");
+      showMsg(els.guestMsg, `${displayName(selectedUser)} added to the guest list.`, "ok");
     }
 
-    async function unassignSelectedUser(){
+    async function removeSelectedUser() {
       if (!currentEventId) {
-        showMsg(els.assignMsg, "Create or load an event first.", "error");
+        showMsg(els.guestMsg, "Load or create an event first.", "error");
         return;
       }
 
       if (!selectedUser) {
-        showMsg(els.assignMsg, "Select a user first.", "error");
+        showMsg(els.guestMsg, "Select a user first.", "error");
         return;
       }
 
-      const existing = currentAssignments[selectedUser.__uid];
-      if (!existing) {
-        showMsg(els.assignMsg, "That user does not have an assigned code.", "warn");
+      const exists = !!currentGuestList[selectedUser.__uid];
+      if (!exists) {
+        showMsg(els.guestMsg, `${displayName(selectedUser)} is not on the guest list.`, "warn");
         return;
       }
 
-      await remove(ref(rtdb, `events/${currentEventId}/assignments/${selectedUser.__uid}`));
-      delete currentAssignments[selectedUser.__uid];
-
-      await syncCodesArray();
-      renderCodeDropdown();
-      renderAssignedCodes();
-      renderSelectedUser();
-      renderUsers();
-      refreshStats();
-
-      showMsg(els.assignMsg, `Removed ${displayName(selectedUser)}'s assignment.`, "ok");
+      await remove(ref(db, `events/${currentEventId}/guestList/${selectedUser.__uid}`));
+      showMsg(els.guestMsg, `${displayName(selectedUser)} removed from the guest list.`, "ok");
     }
 
-    async function loadUsers(){
+    async function loadUsers() {
       try {
         const snap = await getDocs(collection(fdb, "users"));
         const users = [];
-
         snap.forEach(docSnap => {
           const data = docSnap.data() || {};
           data.__uid = docSnap.id;
           users.push(data);
         });
-
         allUsers = users;
-        populateSchoolOptions(allUsers);
-        renderUsers();
+        refreshStats();
+        renderSearchDropdown();
       } catch (error) {
         console.error(error);
-        els.userResults.innerHTML = `<div class="empty">Could not load users. Check Firestore rules and internet.</div>`;
+        showMsg(els.eventMsg, "Could not load users from Firestore.", "error");
       }
     }
 
-    async function refreshAll(){
+    async function refreshAll() {
+      await loadUsers();
       if (currentEventId) {
         const snap = await get(eventRef(currentEventId));
-        if (snap.exists()) {
-          fillEventForm(currentEventId, snap.val());
-        }
+        currentEventValue = snap.val() || null;
+        currentGuestList = currentEventValue?.guestList || {};
+        renderGuestList();
+        renderSelectedUser();
+        renderSearchDropdown();
       }
-      await loadUsers();
       showMsg(els.eventMsg, "Refreshed.", "ok");
     }
 
-    els.userSearchInput.addEventListener("input", renderUsers);
-    els.schoolFilter.addEventListener("change", renderUsers);
+    els.loadEventBtn.addEventListener("click", loadOrCreateEvent);
+    els.addSelectedBtn.addEventListener("click", addSelectedUser);
+    els.removeSelectedBtn.addEventListener("click", removeSelectedUser);
+    els.refreshBtn.addEventListener("click", refreshAll);
+
+    els.userSearchInput.addEventListener("input", renderSearchDropdown);
+    els.userSearchInput.addEventListener("focus", renderSearchDropdown);
 
     els.clearSearchBtn.addEventListener("click", () => {
       els.userSearchInput.value = "";
-      els.schoolFilter.value = "";
-      renderUsers();
+      els.searchDropdown.classList.remove("open");
+      els.searchDropdown.innerHTML = "";
+      els.resultsChip.textContent = "0 results";
     });
 
-    els.saveEventBtn.addEventListener("click", saveEvent);
-    els.loadEventBtn.addEventListener("click", loadEvent);
-    els.generateCodeBtn.addEventListener("click", generateNewCode);
-    els.assignCodeBtn.addEventListener("click", assignCodeToSelectedUser);
-    els.unassignCodeBtn.addEventListener("click", unassignSelectedUser);
-    els.refreshAllBtn.addEventListener("click", refreshAll);
-
-    els.copyCodesBtn.addEventListener("click", async () => {
-      const codes = Object.keys(currentAllowedCodes || {}).sort((a, b) => a.localeCompare(b)).join("\n");
-      if (!codes) {
-        showMsg(els.assignMsg, "No codes to copy yet.", "warn");
-        return;
-      }
-      try {
-        await navigator.clipboard.writeText(codes);
-        showMsg(els.assignMsg, "Copied all valid codes.", "ok");
-      } catch (_) {
-        showMsg(els.assignMsg, "Could not copy codes.", "warn");
-      }
-    });
-
-    els.manualCodeInput.addEventListener("input", () => {
-      els.manualCodeInput.value = normalizeCode(els.manualCodeInput.value);
+    document.addEventListener("click", (e) => {
+      const inside = els.searchDropdown.contains(e.target) || els.userSearchInput.contains(e.target);
+      if (!inside) els.searchDropdown.classList.remove("open");
     });
 
     els.eventNameInput.addEventListener("blur", () => {
@@ -1579,9 +1104,7 @@
     });
 
     els.logoutBtn.addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (_) {}
+      try { await signOut(auth); } catch (_) {}
       location.href = "index.html";
     });
 
@@ -1594,7 +1117,6 @@
       const who = user.displayName?.trim() || user.email || "Signed in user";
       els.userChip.textContent = `User: ${who}`;
       els.subline.textContent = "Signed in";
-
       await loadUsers();
     });
   </script>
