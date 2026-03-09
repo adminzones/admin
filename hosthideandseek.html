@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>uZone • Guest List Host</title>
+  <title>uZone • Guest List</title>
   <link rel="icon" type="image/png" href="logo.png" />
   <meta name="color-scheme" content="light" />
 
@@ -23,8 +23,6 @@
       --goodBg:#eaf8f1;
       --danger:#c6285d;
       --dangerBg:#fdeef3;
-      --warn:#a76a00;
-      --warnBg:#fff6e5;
     }
 
     *{box-sizing:border-box}
@@ -39,8 +37,8 @@
         linear-gradient(180deg, #fbfbff 0%, #f7f7fb 100%);
     }
 
-    a{color:inherit;text-decoration:none}
     button,input{font:inherit}
+    a{color:inherit;text-decoration:none}
 
     header{
       position:sticky;
@@ -52,7 +50,7 @@
     }
 
     .topbar{
-      width:min(1180px,92vw);
+      width:min(980px,92vw);
       margin:0 auto;
       padding:14px 0;
       display:flex;
@@ -91,13 +89,6 @@
     .brandText span{
       font-size:12px;
       color:var(--muted);
-    }
-
-    .topActions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
     }
 
     .chip{
@@ -152,12 +143,6 @@
       border-color:rgba(198,40,93,.18);
     }
 
-    .btn.warn{
-      background:var(--warnBg);
-      color:var(--warn);
-      border-color:rgba(167,106,0,.18);
-    }
-
     .btn:disabled{
       opacity:.6;
       cursor:not-allowed;
@@ -166,13 +151,13 @@
     }
 
     main{
-      width:min(1180px,92vw);
-      margin:24px auto 50px;
+      width:min(980px,92vw);
+      margin:28px auto 50px;
       display:grid;
       gap:18px;
     }
 
-    .hero,.card{
+    .card{
       background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.88));
       border:1px solid rgba(255,255,255,.7);
       box-shadow:var(--shadow);
@@ -180,75 +165,27 @@
       overflow:hidden;
     }
 
-    .hero{
-      padding:22px;
-    }
-
-    .hero h1{
-      margin:0;
-      font-size:28px;
-      letter-spacing:.2px;
-    }
-
-    .hero p{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-      max-width:78ch;
-    }
-
-    .inlineCode{
-      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-      font-size:12px;
-      background:#f2f3f8;
-      border:1px solid #e7e8f0;
-      padding:2px 7px;
-      border-radius:8px;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:18px;
-      align-items:start;
-    }
-
     .cardInner{
-      padding:20px;
-    }
-
-    .titleRow{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
+      padding:22px;
     }
 
     .title{
       margin:0;
-      font-size:18px;
+      font-size:24px;
       letter-spacing:.2px;
     }
 
     .sub{
-      margin-top:6px;
-      font-size:13px;
+      margin-top:8px;
+      font-size:14px;
       color:var(--muted);
-      line-height:1.45;
-    }
-
-    .row2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
+      line-height:1.5;
     }
 
     .field{
       display:grid;
       gap:8px;
-      margin-top:14px;
+      margin-top:18px;
     }
 
     .field label{
@@ -273,76 +210,8 @@
       box-shadow:0 0 0 4px rgba(109,40,217,.10);
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
-    }
-
-    .msg{
-      display:none;
-      margin-top:14px;
-      padding:13px 14px;
-      border-radius:14px;
-      font-size:13px;
-      line-height:1.45;
-      white-space:pre-line;
-      border:1px solid var(--border);
-      background:#fff;
-      color:#43465c;
-    }
-
-    .msg.ok{
-      display:block;
-      background:var(--goodBg);
-      color:#166b47;
-      border-color:rgba(31,157,103,.18);
-    }
-
-    .msg.error{
-      display:block;
-      background:var(--dangerBg);
-      color:#8b1842;
-      border-color:rgba(198,40,93,.18);
-    }
-
-    .msg.warn{
-      display:block;
-      background:var(--warnBg);
-      color:#8a5900;
-      border-color:rgba(167,106,0,.18);
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:16px;
-    }
-
-    .stat{
-      padding:15px;
-      border-radius:18px;
-      border:1px solid var(--border);
-      background:var(--card2);
-    }
-
-    .stat b{
-      display:block;
-      font-size:13px;
-      margin-bottom:6px;
-    }
-
-    .stat span{
-      font-size:24px;
-      font-weight:950;
-      letter-spacing:.2px;
-    }
-
     .searchShell{
       position:relative;
-      margin-top:14px;
     }
 
     .dropdown{
@@ -448,26 +317,10 @@
       border-color:rgba(31,157,103,.18);
     }
 
-    .pill.danger{
-      background:var(--dangerBg);
-      color:var(--danger);
-      border-color:rgba(198,40,93,.18);
-    }
-
     .list{
       display:grid;
       gap:10px;
-      margin-top:16px;
-    }
-
-    .empty{
-      padding:16px;
-      border-radius:16px;
-      border:1px dashed #d9dbe7;
-      color:var(--muted);
-      background:#fcfcff;
-      font-size:13px;
-      line-height:1.45;
+      margin-top:18px;
     }
 
     .guestRow{
@@ -481,32 +334,68 @@
       background:#fff;
     }
 
-    .guestRight{
+    .empty{
+      padding:16px;
+      border-radius:16px;
+      border:1px dashed #d9dbe7;
+      color:var(--muted);
+      background:#fcfcff;
+      font-size:13px;
+      line-height:1.45;
+      margin-top:18px;
+    }
+
+    .msg{
+      display:none;
+      margin-top:14px;
+      padding:13px 14px;
+      border-radius:14px;
+      font-size:13px;
+      line-height:1.45;
+      white-space:pre-line;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#43465c;
+    }
+
+    .msg.ok{
+      display:block;
+      background:var(--goodBg);
+      color:#166b47;
+      border-color:rgba(31,157,103,.18);
+    }
+
+    .msg.error{
+      display:block;
+      background:var(--dangerBg);
+      color:#8b1842;
+      border-color:rgba(198,40,93,.18);
+    }
+
+    .guestTop{
       display:flex;
       align-items:center;
-      gap:10px;
+      justify-content:space-between;
+      gap:12px;
       flex-wrap:wrap;
-      justify-content:flex-end;
+      margin-top:22px;
     }
 
-    .footerNote{
-      margin-top:12px;
+    .count{
+      font-size:13px;
       color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
+      font-weight:800;
     }
 
-    @media (max-width:980px){
-      .layout{grid-template-columns:1fr}
-    }
+    @media (max-width:700px){
+      .resultItem,.guestRow{
+        grid-template-columns:56px 1fr;
+      }
 
-    @media (max-width:760px){
-      .row2,.stats{grid-template-columns:1fr}
-      .resultItem,.guestRow{grid-template-columns:56px 1fr}
       .resultItem > .btn,
-      .guestRow > .guestRight{
+      .guestRow > .btn{
         grid-column:1 / -1;
-        justify-content:flex-start;
+        justify-self:start;
       }
     }
   </style>
@@ -517,140 +406,56 @@
       <div class="brand">
         <img src="logo.png" alt="uZone logo" />
         <div class="brandText">
-          <b>uZone • Guest List Host</b>
+          <b>uZone • Guest List</b>
           <span id="subline">Checking sign-in…</span>
         </div>
       </div>
-
-      <div class="topActions">
-        <span class="chip" id="userChip">User: —</span>
-        <a class="btn" href="hub.html">Hub</a>
-        <button class="btn" id="refreshBtn" type="button">Refresh</button>
-        <button class="btn danger" id="logoutBtn" type="button">Log out</button>
-      </div>
+      <span class="chip" id="userChip">User: —</span>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <h1>Guest list builder</h1>
-      <p>
-        Search users by name, email, or U# and add or remove them from the guest list.
-        The guest list is saved to <span class="inlineCode">/events/{eventId}/guestList</span>
-        so you always keep track of who is on it.
-      </p>
-    </section>
+    <section class="card">
+      <div class="cardInner">
+        <h1 class="title">Guest List</h1>
+        <div class="sub">Search users by name, email, or U# and add them to the guest list. Remove them anytime.</div>
 
-    <section class="layout">
-      <section class="card">
-        <div class="cardInner">
-          <div class="titleRow">
-            <div>
-              <h2 class="title">Event + user search</h2>
-              <div class="sub">Choose the event ID you want to manage, then search and add users.</div>
-            </div>
-            <span class="pill" id="resultsChip">0 results</span>
+        <div class="field">
+          <label for="userSearchInput">Search users</label>
+          <div class="searchShell">
+            <input
+              id="userSearchInput"
+              class="input"
+              type="search"
+              placeholder="Search by name, email, or U#"
+              autocomplete="off"
+            />
+            <div id="searchDropdown" class="dropdown"></div>
           </div>
-
-          <div class="row2">
-            <div class="field">
-              <label for="eventIdInput">Event ID</label>
-              <input id="eventIdInput" class="input" type="text" placeholder="hide-and-seek-night" autocomplete="off" />
-            </div>
-
-            <div class="field">
-              <label for="eventNameInput">Event name</label>
-              <input id="eventNameInput" class="input" type="text" placeholder="Campus Hide & Seek" autocomplete="off" />
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn primary" id="loadEventBtn" type="button">Load / create event</button>
-            <button class="btn warn" id="clearSearchBtn" type="button">Clear search</button>
-          </div>
-
-          <div id="eventMsg" class="msg" aria-live="polite"></div>
-
-          <div class="field" style="margin-top:18px;">
-            <label for="userSearchInput">Search users</label>
-            <div class="searchShell">
-              <input
-                id="userSearchInput"
-                class="input"
-                type="search"
-                placeholder="Search by name, email, or U#"
-                autocomplete="off"
-              />
-              <div id="searchDropdown" class="dropdown"></div>
-            </div>
-          </div>
-
-          <div class="footerNote">
-            Click a user in the dropdown to preview them, then use add or remove.
-          </div>
-
-          <div class="field" style="margin-top:18px;">
-            <label>Selected user</label>
-            <div id="selectedUserBox" class="empty">No user selected yet.</div>
-          </div>
-
-          <div class="actions">
-            <button class="btn good" id="addSelectedBtn" type="button">Add selected user</button>
-            <button class="btn danger" id="removeSelectedBtn" type="button">Remove selected user</button>
-          </div>
-
-          <div id="guestMsg" class="msg" aria-live="polite"></div>
         </div>
-      </section>
 
-      <section class="card">
-        <div class="cardInner">
-          <div class="titleRow">
-            <div>
-              <h2 class="title">Guest list</h2>
-              <div class="sub">Everyone currently on this event’s guest list.</div>
-            </div>
-          </div>
+        <div id="msg" class="msg" aria-live="polite"></div>
 
-          <div class="stats">
-            <div class="stat">
-              <b>Current event</b>
-              <span id="currentEventStat">—</span>
-            </div>
-            <div class="stat">
-              <b>Total users loaded</b>
-              <span id="totalUsersStat">0</span>
-            </div>
-            <div class="stat">
-              <b>Guests on list</b>
-              <span id="guestCountStat">0</span>
-            </div>
-          </div>
-
-          <div id="guestList" class="list"></div>
+        <div class="guestTop">
+          <h2 class="title" style="font-size:18px;">Guest List</h2>
+          <div class="count" id="guestCount">0 users</div>
         </div>
-      </section>
+
+        <div id="guestList" class="list"></div>
+      </div>
     </section>
   </main>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
     import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
     import {
       getDatabase,
       ref,
-      get,
-      set,
-      update,
-      remove,
       onValue,
-      off,
-      serverTimestamp
+      set,
+      remove
     } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
     import {
       getFirestore,
@@ -679,46 +484,25 @@
     const els = {
       subline: document.getElementById("subline"),
       userChip: document.getElementById("userChip"),
-      refreshBtn: document.getElementById("refreshBtn"),
-      logoutBtn: document.getElementById("logoutBtn"),
-
-      eventIdInput: document.getElementById("eventIdInput"),
-      eventNameInput: document.getElementById("eventNameInput"),
-      loadEventBtn: document.getElementById("loadEventBtn"),
-      clearSearchBtn: document.getElementById("clearSearchBtn"),
-      eventMsg: document.getElementById("eventMsg"),
-
       userSearchInput: document.getElementById("userSearchInput"),
       searchDropdown: document.getElementById("searchDropdown"),
-      resultsChip: document.getElementById("resultsChip"),
-
-      selectedUserBox: document.getElementById("selectedUserBox"),
-      addSelectedBtn: document.getElementById("addSelectedBtn"),
-      removeSelectedBtn: document.getElementById("removeSelectedBtn"),
-      guestMsg: document.getElementById("guestMsg"),
-
-      currentEventStat: document.getElementById("currentEventStat"),
-      totalUsersStat: document.getElementById("totalUsersStat"),
-      guestCountStat: document.getElementById("guestCountStat"),
-      guestList: document.getElementById("guestList")
+      guestList: document.getElementById("guestList"),
+      guestCount: document.getElementById("guestCount"),
+      msg: document.getElementById("msg")
     };
 
     let allUsers = [];
-    let selectedUser = null;
-    let currentEventId = "";
-    let currentEventValue = null;
-    let currentGuestList = {};
-    let eventListenerRef = null;
+    let guestList = {};
 
-    function showMsg(el, text = "", kind = "") {
-      el.textContent = text;
-      el.className = "msg";
+    function showMsg(text = "", kind = "") {
+      els.msg.textContent = text;
+      els.msg.className = "msg";
       if (!text) {
-        el.style.display = "none";
+        els.msg.style.display = "none";
         return;
       }
-      el.style.display = "block";
-      if (kind) el.classList.add(kind);
+      els.msg.style.display = "block";
+      if (kind) els.msg.classList.add(kind);
     }
 
     function escapeHtml(value) {
@@ -731,16 +515,8 @@
       }[m]));
     }
 
-    function escapeAttr(value){
-      return escapeHtml(value).replaceAll("\n"," ").replaceAll("\r"," ");
-    }
-
-    function slugify(value) {
-      return String(value ?? "")
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("\n", " ").replaceAll("\r", " ");
     }
 
     function norm(value) {
@@ -769,42 +545,8 @@
       return `<div class="avatar">${escapeHtml(displayName(user).charAt(0).toUpperCase() || "?")}</div>`;
     }
 
-    function eventRef(eventId) {
-      return ref(db, `events/${eventId}`);
-    }
-
-    function guestListRef(eventId) {
-      return ref(db, `events/${eventId}/guestList`);
-    }
-
-    function refreshStats() {
-      els.currentEventStat.textContent = currentEventId || "—";
-      els.totalUsersStat.textContent = String(allUsers.length);
-      els.guestCountStat.textContent = String(Object.keys(currentGuestList || {}).length);
-    }
-
-    function renderSelectedUser() {
-      if (!selectedUser) {
-        els.selectedUserBox.className = "empty";
-        els.selectedUserBox.textContent = "No user selected yet.";
-        return;
-      }
-
-      const onList = !!currentGuestList[selectedUser.__uid];
-      els.selectedUserBox.className = "";
-      els.selectedUserBox.innerHTML = `
-        <div class="guestRow" style="margin:0;">
-          ${avatarHtml(selectedUser)}
-          <div class="resultMain">
-            <div class="name">${escapeHtml(displayName(selectedUser))}</div>
-            <div class="meta">
-              <span class="pill">🆔 ${escapeHtml(publicId(selectedUser))}</span>
-              ${selectedUser.email ? `<span class="pill">${escapeHtml(selectedUser.email)}</span>` : ""}
-              ${onList ? `<span class="pill good">On guest list</span>` : `<span class="pill danger">Not on guest list</span>`}
-            </div>
-          </div>
-        </div>
-      `;
+    function guestListRef() {
+      return ref(db, "guestList");
     }
 
     function filteredUsers() {
@@ -823,14 +565,12 @@
           return blob.includes(q);
         })
         .sort((a, b) => displayName(a).localeCompare(displayName(b)))
-        .slice(0, 50);
+        .slice(0, 25);
     }
 
-    function renderSearchDropdown() {
+    function renderDropdown() {
       const q = norm(els.userSearchInput.value);
       const results = filteredUsers();
-
-      els.resultsChip.textContent = `${results.length} result${results.length === 1 ? "" : "s"}`;
 
       if (!q) {
         els.searchDropdown.classList.remove("open");
@@ -839,13 +579,13 @@
       }
 
       if (!results.length) {
-        els.searchDropdown.innerHTML = `<div class="empty">No users found for that search.</div>`;
+        els.searchDropdown.innerHTML = `<div class="empty" style="margin-top:0;">No users found.</div>`;
         els.searchDropdown.classList.add("open");
         return;
       }
 
       els.searchDropdown.innerHTML = results.map(user => {
-        const onList = !!currentGuestList[user.__uid];
+        const alreadyOnList = !!guestList[user.__uid];
         return `
           <div class="resultItem" data-uid="${escapeAttr(user.__uid)}">
             ${avatarHtml(user)}
@@ -854,10 +594,10 @@
               <div class="meta">
                 <span class="pill">🆔 ${escapeHtml(publicId(user))}</span>
                 ${user.email ? `<span class="pill">${escapeHtml(user.email)}</span>` : ""}
-                ${onList ? `<span class="pill good">On guest list</span>` : ""}
+                ${alreadyOnList ? `<span class="pill good">Already added</span>` : ``}
               </div>
             </div>
-            <button class="btn primary" type="button">Select</button>
+            <button class="btn good addBtn" type="button" ${alreadyOnList ? "disabled" : ""}>Add</button>
           </div>
         `;
       }).join("");
@@ -865,41 +605,44 @@
       els.searchDropdown.classList.add("open");
 
       els.searchDropdown.querySelectorAll(".resultItem").forEach(item => {
-        item.addEventListener("click", () => {
-          const uid = item.getAttribute("data-uid");
-          const user = allUsers.find(u => u.__uid === uid);
-          if (!user) return;
-          selectedUser = user;
-          renderSelectedUser();
-          els.searchDropdown.classList.remove("open");
-        });
-
-        item.querySelector("button")?.addEventListener("click", (e) => {
+        const addBtn = item.querySelector(".addBtn");
+        addBtn?.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopPropagation();
+
           const uid = item.getAttribute("data-uid");
           const user = allUsers.find(u => u.__uid === uid);
           if (!user) return;
-          selectedUser = user;
-          renderSelectedUser();
+
+          await set(ref(db, `guestList/${uid}`), {
+            uid,
+            name: displayName(user),
+            displayName: user.displayName || "",
+            email: user.email || "",
+            publicId: publicId(user)
+          });
+
+          els.userSearchInput.value = "";
           els.searchDropdown.classList.remove("open");
+          els.searchDropdown.innerHTML = "";
+          showMsg(`${displayName(user)} added to guest list.`, "ok");
         });
       });
     }
 
     function renderGuestList() {
-      const entries = Object.entries(currentGuestList || {}).map(([uid, value]) => ({ uid, ...value }));
+      const entries = Object.entries(guestList || {}).map(([uid, value]) => ({ uid, ...value }));
       entries.sort((a, b) => {
         const an = String(a.name || a.displayName || a.email || "").toLowerCase();
         const bn = String(b.name || b.displayName || b.email || "").toLowerCase();
         return an.localeCompare(bn);
       });
 
+      els.guestCount.textContent = `${entries.length} user${entries.length === 1 ? "" : "s"}`;
       els.guestList.innerHTML = "";
 
       if (!entries.length) {
-        els.guestList.innerHTML = `<div class="empty">No users are on the guest list yet.</div>`;
-        refreshStats();
+        els.guestList.innerHTML = `<div class="empty">No one is on the guest list yet.</div>`;
         return;
       }
 
@@ -912,138 +655,25 @@
         row.innerHTML = `
           ${avatarHtml(guest)}
           <div class="resultMain">
-            <div class="name">${escapeHtml(guest.name || guest.displayName || guest.email || guest.uid || "Unknown user")}</div>
+            <div class="name">${escapeHtml(guest.name || guest.displayName || guest.email || "Unknown user")}</div>
             <div class="meta">
               <span class="pill">🆔 ${escapeHtml(guest.publicId || "U?")}</span>
               ${guest.email ? `<span class="pill">${escapeHtml(guest.email)}</span>` : ""}
               <span class="pill good">On guest list</span>
             </div>
           </div>
-          <div class="guestRight">
-            <button class="btn danger" type="button">Remove</button>
-          </div>
+          <button class="btn danger" type="button">Remove</button>
         `;
 
         row.querySelector("button")?.addEventListener("click", async () => {
-          if (!currentEventId) return;
-          await remove(ref(db, `events/${currentEventId}/guestList/${guest.uid}`));
-          showMsg(els.guestMsg, `${guest.name || guest.email || "User"} removed from guest list.`, "ok");
+          await remove(ref(db, `guestList/${guest.uid}`));
+          showMsg(`${guest.name || guest.email || "User"} removed from guest list.`, "ok");
         });
 
         frag.appendChild(row);
       }
 
       els.guestList.appendChild(frag);
-      refreshStats();
-    }
-
-    function attachEventListener(eventId) {
-      if (eventListenerRef) off(eventListenerRef);
-
-      eventListenerRef = eventRef(eventId);
-      onValue(eventListenerRef, (snap) => {
-        const value = snap.val() || null;
-        currentEventValue = value;
-        currentGuestList = value?.guestList || {};
-        if (value?.name && !els.eventNameInput.value.trim()) {
-          els.eventNameInput.value = value.name;
-        }
-        renderSelectedUser();
-        renderSearchDropdown();
-        renderGuestList();
-        refreshStats();
-      }, (error) => {
-        console.error(error);
-        showMsg(els.eventMsg, "Could not listen to the event.", "error");
-      });
-    }
-
-    async function loadOrCreateEvent() {
-      let id = slugify(els.eventIdInput.value);
-      const name = els.eventNameInput.value.trim();
-
-      if (!id && name) {
-        id = slugify(name);
-        els.eventIdInput.value = id;
-      }
-
-      if (!id) {
-        showMsg(els.eventMsg, "Enter an event ID or event name first.", "error");
-        return;
-      }
-
-      const snap = await get(eventRef(id));
-
-      if (!snap.exists()) {
-        await set(eventRef(id), {
-          name: name || id,
-          guestList: {},
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        });
-        showMsg(els.eventMsg, `Created event "${id}".`, "ok");
-      } else {
-        if (name) {
-          await update(eventRef(id), {
-            name,
-            updatedAt: serverTimestamp()
-          });
-        }
-        showMsg(els.eventMsg, `Loaded event "${id}".`, "ok");
-      }
-
-      currentEventId = id;
-      attachEventListener(id);
-      refreshStats();
-    }
-
-    async function addSelectedUser() {
-      if (!currentEventId) {
-        showMsg(els.guestMsg, "Load or create an event first.", "error");
-        return;
-      }
-
-      if (!selectedUser) {
-        showMsg(els.guestMsg, "Select a user first.", "error");
-        return;
-      }
-
-      const payload = {
-        uid: selectedUser.__uid,
-        name: displayName(selectedUser),
-        displayName: selectedUser.displayName || "",
-        email: selectedUser.email || "",
-        publicId: publicId(selectedUser),
-        addedAt: Date.now()
-      };
-
-      await update(eventRef(currentEventId), {
-        [`guestList/${selectedUser.__uid}`]: payload,
-        updatedAt: serverTimestamp()
-      });
-
-      showMsg(els.guestMsg, `${displayName(selectedUser)} added to the guest list.`, "ok");
-    }
-
-    async function removeSelectedUser() {
-      if (!currentEventId) {
-        showMsg(els.guestMsg, "Load or create an event first.", "error");
-        return;
-      }
-
-      if (!selectedUser) {
-        showMsg(els.guestMsg, "Select a user first.", "error");
-        return;
-      }
-
-      const exists = !!currentGuestList[selectedUser.__uid];
-      if (!exists) {
-        showMsg(els.guestMsg, `${displayName(selectedUser)} is not on the guest list.`, "warn");
-        return;
-      }
-
-      await remove(ref(db, `events/${currentEventId}/guestList/${selectedUser.__uid}`));
-      showMsg(els.guestMsg, `${displayName(selectedUser)} removed from the guest list.`, "ok");
     }
 
     async function loadUsers() {
@@ -1056,56 +686,30 @@
           users.push(data);
         });
         allUsers = users;
-        refreshStats();
-        renderSearchDropdown();
+        renderDropdown();
       } catch (error) {
         console.error(error);
-        showMsg(els.eventMsg, "Could not load users from Firestore.", "error");
+        showMsg("Could not load users.", "error");
       }
     }
 
-    async function refreshAll() {
-      await loadUsers();
-      if (currentEventId) {
-        const snap = await get(eventRef(currentEventId));
-        currentEventValue = snap.val() || null;
-        currentGuestList = currentEventValue?.guestList || {};
+    function startGuestListListener() {
+      onValue(guestListRef(), (snap) => {
+        guestList = snap.val() || {};
         renderGuestList();
-        renderSelectedUser();
-        renderSearchDropdown();
-      }
-      showMsg(els.eventMsg, "Refreshed.", "ok");
+        renderDropdown();
+      }, (error) => {
+        console.error(error);
+        showMsg("Could not load guest list.", "error");
+      });
     }
 
-    els.loadEventBtn.addEventListener("click", loadOrCreateEvent);
-    els.addSelectedBtn.addEventListener("click", addSelectedUser);
-    els.removeSelectedBtn.addEventListener("click", removeSelectedUser);
-    els.refreshBtn.addEventListener("click", refreshAll);
-
-    els.userSearchInput.addEventListener("input", renderSearchDropdown);
-    els.userSearchInput.addEventListener("focus", renderSearchDropdown);
-
-    els.clearSearchBtn.addEventListener("click", () => {
-      els.userSearchInput.value = "";
-      els.searchDropdown.classList.remove("open");
-      els.searchDropdown.innerHTML = "";
-      els.resultsChip.textContent = "0 results";
-    });
+    els.userSearchInput.addEventListener("input", renderDropdown);
+    els.userSearchInput.addEventListener("focus", renderDropdown);
 
     document.addEventListener("click", (e) => {
       const inside = els.searchDropdown.contains(e.target) || els.userSearchInput.contains(e.target);
       if (!inside) els.searchDropdown.classList.remove("open");
-    });
-
-    els.eventNameInput.addEventListener("blur", () => {
-      if (!els.eventIdInput.value.trim()) {
-        els.eventIdInput.value = slugify(els.eventNameInput.value);
-      }
-    });
-
-    els.logoutBtn.addEventListener("click", async () => {
-      try { await signOut(auth); } catch (_) {}
-      location.href = "index.html";
     });
 
     onAuthStateChanged(auth, async (user) => {
@@ -1117,7 +721,9 @@
       const who = user.displayName?.trim() || user.email || "Signed in user";
       els.userChip.textContent = `User: ${who}`;
       els.subline.textContent = "Signed in";
+
       await loadUsers();
+      startGuestListListener();
     });
   </script>
 </body>
