@@ -50,7 +50,7 @@
     }
 
     .topbar{
-      width:min(980px,92vw);
+      width:min(1000px,92vw);
       margin:0 auto;
       padding:14px 0;
       display:flex;
@@ -108,50 +108,8 @@
       text-overflow:ellipsis;
     }
 
-    .btn{
-      border:none;
-      outline:none;
-      cursor:pointer;
-      border-radius:14px;
-      padding:11px 14px;
-      font-weight:900;
-      transition:.15s ease;
-      background:#fff;
-      color:var(--text);
-      border:1px solid var(--border);
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-      box-shadow:0 12px 28px rgba(20,20,27,.07);
-    }
-
-    .btn.primary{
-      background:linear-gradient(135deg, rgba(109,40,217,.12), rgba(176,11,85,.10));
-      border-color:rgba(109,40,217,.18);
-    }
-
-    .btn.good{
-      background:var(--goodBg);
-      color:var(--good);
-      border-color:rgba(31,157,103,.18);
-    }
-
-    .btn.danger{
-      background:var(--dangerBg);
-      color:var(--danger);
-      border-color:rgba(198,40,93,.18);
-    }
-
-    .btn:disabled{
-      opacity:.6;
-      cursor:not-allowed;
-      transform:none;
-      box-shadow:none;
-    }
-
     main{
-      width:min(980px,92vw);
+      width:min(1000px,92vw);
       margin:28px auto 50px;
       display:grid;
       gap:18px;
@@ -180,6 +138,12 @@
       font-size:14px;
       color:var(--muted);
       line-height:1.5;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
     }
 
     .field{
@@ -265,6 +229,7 @@
       color:#fff;
       background:linear-gradient(135deg, var(--accent2), var(--accent));
       border:1px solid rgba(20,20,27,.08);
+      flex:0 0 56px;
     }
 
     .avatar img{
@@ -317,32 +282,41 @@
       border-color:rgba(31,157,103,.18);
     }
 
-    .list{
-      display:grid;
-      gap:10px;
-      margin-top:18px;
-    }
-
-    .guestRow{
-      display:grid;
-      grid-template-columns:56px 1fr auto;
-      gap:12px;
-      align-items:center;
-      padding:12px;
-      border-radius:18px;
-      border:1px solid var(--border);
+    .btn{
+      border:none;
+      outline:none;
+      cursor:pointer;
+      border-radius:14px;
+      padding:11px 14px;
+      font-weight:900;
+      transition:.15s ease;
       background:#fff;
+      color:var(--text);
+      border:1px solid var(--border);
     }
 
-    .empty{
-      padding:16px;
-      border-radius:16px;
-      border:1px dashed #d9dbe7;
-      color:var(--muted);
-      background:#fcfcff;
-      font-size:13px;
-      line-height:1.45;
-      margin-top:18px;
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 12px 28px rgba(20,20,27,.07);
+    }
+
+    .btn.good{
+      background:var(--goodBg);
+      color:var(--good);
+      border-color:rgba(31,157,103,.18);
+    }
+
+    .btn.danger{
+      background:var(--dangerBg);
+      color:var(--danger);
+      border-color:rgba(198,40,93,.18);
+    }
+
+    .btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
     }
 
     .msg{
@@ -372,19 +346,58 @@
       border-color:rgba(198,40,93,.18);
     }
 
+    .msg.warn{
+      display:block;
+      background:#fff8e8;
+      color:#8a6200;
+      border-color:#f0dca7;
+    }
+
     .guestTop{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
-      margin-top:22px;
+      margin-bottom:14px;
     }
 
     .count{
       font-size:13px;
       color:var(--muted);
       font-weight:800;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .guestRow{
+      display:grid;
+      grid-template-columns:56px 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:#fff;
+    }
+
+    .empty{
+      padding:16px;
+      border-radius:16px;
+      border:1px dashed #d9dbe7;
+      color:var(--muted);
+      background:#fcfcff;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    @media (max-width:860px){
+      .layout{
+        grid-template-columns:1fr;
+      }
     }
 
     @media (max-width:700px){
@@ -415,34 +428,43 @@
   </header>
 
   <main>
-    <section class="card">
-      <div class="cardInner">
-        <h1 class="title">Guest List</h1>
-        <div class="sub">Search users by name, email, or U# and add them to the guest list. Remove them anytime.</div>
+    <section class="layout">
+      <section class="card">
+        <div class="cardInner">
+          <h1 class="title">Add users</h1>
+          <div class="sub">Search by name, email, or U# and add them directly to the guest list.</div>
 
-        <div class="field">
-          <label for="userSearchInput">Search users</label>
-          <div class="searchShell">
-            <input
-              id="userSearchInput"
-              class="input"
-              type="search"
-              placeholder="Search by name, email, or U#"
-              autocomplete="off"
-            />
-            <div id="searchDropdown" class="dropdown"></div>
+          <div class="field">
+            <label for="userSearchInput">Search users</label>
+            <div class="searchShell">
+              <input
+                id="userSearchInput"
+                class="input"
+                type="search"
+                placeholder="Search by name, email, or U#"
+                autocomplete="off"
+              />
+              <div id="searchDropdown" class="dropdown"></div>
+            </div>
           </div>
+
+          <div id="msg" class="msg" aria-live="polite"></div>
         </div>
+      </section>
 
-        <div id="msg" class="msg" aria-live="polite"></div>
+      <section class="card">
+        <div class="cardInner">
+          <div class="guestTop">
+            <div>
+              <h2 class="title" style="font-size:20px;">Guest List</h2>
+              <div class="sub" style="margin-top:4px;">Everyone currently added.</div>
+            </div>
+            <div class="count" id="guestCount">0 users</div>
+          </div>
 
-        <div class="guestTop">
-          <h2 class="title" style="font-size:18px;">Guest List</h2>
-          <div class="count" id="guestCount">0 users</div>
+          <div id="guestList" class="list"></div>
         </div>
-
-        <div id="guestList" class="list"></div>
-      </div>
+      </section>
     </section>
   </main>
 
@@ -450,18 +472,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
     import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
-    import {
-      getDatabase,
-      ref,
-      onValue,
-      set,
-      remove
-    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+    import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD_k18vbiBsLhQB7PzgEVT9PEI_30Mu0kg",
@@ -492,7 +504,7 @@
     };
 
     let allUsers = [];
-    let guestList = {};
+    let currentGuestList = {};
 
     function showMsg(text = "", kind = "") {
       els.msg.textContent = text;
@@ -568,7 +580,7 @@
         .slice(0, 25);
     }
 
-    function renderDropdown() {
+    function renderSearchDropdown() {
       const q = norm(els.userSearchInput.value);
       const results = filteredUsers();
 
@@ -579,13 +591,13 @@
       }
 
       if (!results.length) {
-        els.searchDropdown.innerHTML = `<div class="empty" style="margin-top:0;">No users found.</div>`;
+        els.searchDropdown.innerHTML = `<div class="empty">No users found.</div>`;
         els.searchDropdown.classList.add("open");
         return;
       }
 
       els.searchDropdown.innerHTML = results.map(user => {
-        const alreadyOnList = !!guestList[user.__uid];
+        const onList = !!currentGuestList[user.__uid];
         return `
           <div class="resultItem" data-uid="${escapeAttr(user.__uid)}">
             ${avatarHtml(user)}
@@ -594,10 +606,10 @@
               <div class="meta">
                 <span class="pill">🆔 ${escapeHtml(publicId(user))}</span>
                 ${user.email ? `<span class="pill">${escapeHtml(user.email)}</span>` : ""}
-                ${alreadyOnList ? `<span class="pill good">Already added</span>` : ``}
+                ${onList ? `<span class="pill good">On guest list</span>` : ""}
               </div>
             </div>
-            <button class="btn good addBtn" type="button" ${alreadyOnList ? "disabled" : ""}>Add</button>
+            <button class="btn good addBtn" type="button" ${onList ? "disabled" : ""}>Add</button>
           </div>
         `;
       }).join("");
@@ -605,13 +617,13 @@
       els.searchDropdown.classList.add("open");
 
       els.searchDropdown.querySelectorAll(".resultItem").forEach(item => {
+        const uid = item.getAttribute("data-uid");
+        const user = allUsers.find(u => u.__uid === uid);
         const addBtn = item.querySelector(".addBtn");
+
         addBtn?.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopPropagation();
-
-          const uid = item.getAttribute("data-uid");
-          const user = allUsers.find(u => u.__uid === uid);
           if (!user) return;
 
           await set(ref(db, `guestList/${uid}`), {
@@ -619,19 +631,20 @@
             name: displayName(user),
             displayName: user.displayName || "",
             email: user.email || "",
-            publicId: publicId(user)
+            publicId: publicId(user),
+            addedAt: Date.now()
           });
 
           els.userSearchInput.value = "";
           els.searchDropdown.classList.remove("open");
           els.searchDropdown.innerHTML = "";
-          showMsg(`${displayName(user)} added to guest list.`, "ok");
+          showMsg(`${displayName(user)} added to the guest list.`, "ok");
         });
       });
     }
 
     function renderGuestList() {
-      const entries = Object.entries(guestList || {}).map(([uid, value]) => ({ uid, ...value }));
+      const entries = Object.entries(currentGuestList || {}).map(([uid, value]) => ({ uid, ...value }));
       entries.sort((a, b) => {
         const an = String(a.name || a.displayName || a.email || "").toLowerCase();
         const bn = String(b.name || b.displayName || b.email || "").toLowerCase();
@@ -642,7 +655,7 @@
       els.guestList.innerHTML = "";
 
       if (!entries.length) {
-        els.guestList.innerHTML = `<div class="empty">No one is on the guest list yet.</div>`;
+        els.guestList.innerHTML = `<div class="empty">No users are on the guest list yet.</div>`;
         return;
       }
 
@@ -667,7 +680,7 @@
 
         row.querySelector("button")?.addEventListener("click", async () => {
           await remove(ref(db, `guestList/${guest.uid}`));
-          showMsg(`${guest.name || guest.email || "User"} removed from guest list.`, "ok");
+          showMsg(`${guest.name || guest.email || "User"} removed from the guest list.`, "ok");
         });
 
         frag.appendChild(row);
@@ -686,26 +699,26 @@
           users.push(data);
         });
         allUsers = users;
-        renderDropdown();
+        renderSearchDropdown();
       } catch (error) {
         console.error(error);
         showMsg("Could not load users.", "error");
       }
     }
 
-    function startGuestListListener() {
+    function listenForGuestList() {
       onValue(guestListRef(), (snap) => {
-        guestList = snap.val() || {};
+        currentGuestList = snap.val() || {};
         renderGuestList();
-        renderDropdown();
+        renderSearchDropdown();
       }, (error) => {
         console.error(error);
         showMsg("Could not load guest list.", "error");
       });
     }
 
-    els.userSearchInput.addEventListener("input", renderDropdown);
-    els.userSearchInput.addEventListener("focus", renderDropdown);
+    els.userSearchInput.addEventListener("input", renderSearchDropdown);
+    els.userSearchInput.addEventListener("focus", renderSearchDropdown);
 
     document.addEventListener("click", (e) => {
       const inside = els.searchDropdown.contains(e.target) || els.userSearchInput.contains(e.target);
@@ -723,7 +736,7 @@
       els.subline.textContent = "Signed in";
 
       await loadUsers();
-      startGuestListListener();
+      listenForGuestList();
     });
   </script>
 </body>
